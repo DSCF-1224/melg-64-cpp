@@ -59,6 +59,13 @@ class melg_base {
   static constexpr melg64::result_type min() noexcept {
     return std::numeric_limits<melg64::result_type>::min();
   }
+
+  /**
+   * @brief Yields the largest value that `melg_base`'s `operator()` may return
+   */
+  static constexpr melg64::result_type max() noexcept {
+    return std::numeric_limits<melg64::result_type>::max();
+  }
 };
 
 static_assert(std::uniform_random_bit_generator<melg64::melg_base>);
