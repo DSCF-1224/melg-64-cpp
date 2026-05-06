@@ -1,0 +1,22 @@
+// =============================================================================
+// melg64.hpp — C++ adaptation of MELG-64
+//
+// Original C implementation:
+//   Copyright (c) Shin Harase, Ritsumeikan University
+//                 Takamitsu Kimoto
+//   Non-commercial use only. For commercial use contact:
+//   harase @ fc.ritsumei.ac.jp
+//
+// C++ adaptation:
+//   Copyright (c) DSCF-1224, 2026
+//   Bug reports: https://github.com/DSCF-1224/melg-64-cpp/issues
+//
+// Reference:
+//   S. Harase and T. Kimoto, "Implementing 64-bit maximally equidistributed
+//   F2-linear generators with Mersenne prime period",
+//   ACM Transactions on Mathematical Software, Vol. 44, Issue 3,
+//   April 2018, Article No. 30.
+// =============================================================================
+#ifndef MELG64_H_
+#define MELG64_H_
+#endif /* MELG64_H_ */
