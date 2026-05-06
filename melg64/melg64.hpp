@@ -30,6 +30,10 @@ namespace melg64 {
 // https://cpprefjp.github.io/reference/cstdint.html
 // https://cpprefjp.github.io/reference/cstdint/uint_fast64_t.html
 
+#include <random>
+// https://cppreference.com/cpp/header/random
+// https://cpprefjp.github.io/reference/random.html
+
 using result_type = std::uint_fast64_t;
 
 class melg_base {
