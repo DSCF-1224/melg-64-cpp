@@ -28,6 +28,9 @@ namespace melg64 {
 
 using result_type = std::uint_fast64_t;
 
+class melg_base {
+};
+
 }  // namespace melg64
 
 #define MELG64_H_
