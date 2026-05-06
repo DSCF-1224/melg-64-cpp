@@ -26,6 +26,8 @@ namespace melg64 {
 // https://cpprefjp.github.io/reference/cstdint.html
 // https://cpprefjp.github.io/reference/cstdint/uint_fast64_t.html
 
+using result_type = std::uint_fast64_t;
+
 }  // namespace melg64
 
 #define MELG64_H_
