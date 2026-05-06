@@ -30,6 +30,16 @@ namespace melg64 {
 // https://cpprefjp.github.io/reference/cstdint.html
 // https://cpprefjp.github.io/reference/cstdint/uint_fast64_t.html
 
+#include <limits>
+// https://cppreference.com/cpp/header/limits
+// https://cppreference.com/cpp/types/numeric_limits
+// https://cppreference.com/cpp/types/numeric_limits/max
+// https://cppreference.com/cpp/types/numeric_limits/min
+// https://cpprefjp.github.io/reference/limits.html
+// https://cpprefjp.github.io/reference/limits/numeric_limits.html
+// https://cpprefjp.github.io/reference/limits/numeric_limits/max.html
+// https://cpprefjp.github.io/reference/limits/numeric_limits/min.html
+
 #include <random>
 // https://cppreference.com/cpp/header/random
 // https://cppreference.com/cpp/numeric/random/uniform_random_bit_generator
