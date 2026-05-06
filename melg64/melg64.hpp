@@ -21,6 +21,10 @@
 
 namespace melg64 {
 
+#include <concepts>
+// https://cppreference.com/cpp/header/concepts
+// https://cpprefjp.github.io/reference/concepts.html
+
 #include <cstdint>
 // https://cppreference.com/cpp/header/cstdint
 // https://cpprefjp.github.io/reference/cstdint.html
