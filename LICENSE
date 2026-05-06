@@ -1,0 +1,21 @@
+Underlying algorithm and original C implementation:
+
+  Copyright (c) Shin Harase, Ritsumeikan University
+                Takamitsu Kimoto
+
+  This code can be used freely for personal, academic, or non-commercial
+  purposes. For commercial purposes, please contact S. Harase at:
+  harase @ fc.ritsumei.ac.jp
+
+  Reference:
+    S. Harase and T. Kimoto, "Implementing 64-bit maximally equidistributed
+    F2-linear generators with Mersenne prime period", ACM Transactions on
+    Mathematical Software, Volume 44, Issue 3, April 2018, Article No. 30.
+
+-------------------------------------------------------------------------------
+
+C++ adaptation:
+
+  Copyright (c) DSCF-1224, 2026
+
+  Same non-commercial terms as above apply to this adaptation.
