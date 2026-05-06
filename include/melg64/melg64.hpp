@@ -42,6 +42,7 @@ namespace melg64 {
 
 #include <random>
 // https://cppreference.com/cpp/header/random
+// https://en.cppreference.com/cpp/named_req/UniformRandomBitGenerator
 // https://cppreference.com/cpp/numeric/random/uniform_random_bit_generator
 // https://cpprefjp.github.io/reference/random.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
@@ -50,7 +51,30 @@ using result_type = std::uint_fast64_t;
 
 class melg_base {
  public:
+  // Requirements
+
   using result_type = melg64::result_type;
+
+  /**
+   * @brief Yields the smallest value that `melg_base`'s `operator()` may return
+   */
+  static constexpr melg64::result_type min() noexcept {
+    return std::numeric_limits<melg64::result_type>::min();
+  }
+
+  /**
+   * @brief Yields the largest value that `melg_base`'s `operator()` may return
+   */
+  static constexpr melg64::result_type max() noexcept {
+    return std::numeric_limits<melg64::result_type>::max();
+  }
+
+  /**
+   * @warning Placeholder for future implementation
+   */
+  melg64::result_type operator()() {
+    return static_cast<melg64::result_type>(0);
+  }
 };
 
 static_assert(std::uniform_random_bit_generator<melg64::melg_base>);
