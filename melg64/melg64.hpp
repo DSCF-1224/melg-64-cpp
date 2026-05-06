@@ -18,5 +18,9 @@
 //   April 2018, Article No. 30.
 // =============================================================================
 #ifndef MELG64_H_
+
+namespace melg64 {
+}  // namespace melg64
+
 #define MELG64_H_
 #endif /* MELG64_H_ */
