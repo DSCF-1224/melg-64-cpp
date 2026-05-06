@@ -20,6 +20,12 @@
 #ifndef MELG64_H_
 
 namespace melg64 {
+
+#include <cstdint>
+// https://cppreference.com/cpp/header/cstdint
+// https://cpprefjp.github.io/reference/cstdint.html
+// https://cpprefjp.github.io/reference/cstdint/uint_fast64_t.html
+
 }  // namespace melg64
 
 #define MELG64_H_
