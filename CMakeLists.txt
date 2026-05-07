@@ -13,7 +13,16 @@ target_include_directories(melg64 INTERFACE
 option(MELG64_BUILD_TESTS "Build tests" ON)
 if(MELG64_BUILD_TESTS)
     enable_testing()
+
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/build_info.inc
+        ${CMAKE_CURRENT_BINARY_DIR}/tests/build_info.hpp
+    )
+
     add_executable(test_melg64 tests/test_melg64.cpp)
     target_link_libraries(test_melg64 PRIVATE melg64)
+    target_include_directories(test_melg64 PRIVATE
+        ${CMAKE_CURRENT_BINARY_DIR}/tests
+    )
     add_test(NAME test_melg64 COMMAND test_melg64)
 endif()
