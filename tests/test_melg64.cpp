@@ -20,6 +20,8 @@
 
 #include <melg64/melg64.hpp>
 
+#include "build_info.hpp"
+
 void PrintBuildInfo() {
   std::cout << "Compiler ID : " << BUILD_COMPILER_ID << std::endl;
 }
