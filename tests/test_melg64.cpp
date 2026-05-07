@@ -27,6 +27,7 @@ void PrintBuildInfo() {
   std::cout << "Compiler Version : " << BUILD_COMPILER_VERSION << std::endl;
   std::cout << "std              : C++" << BUILD_CXX_STANDARD << std::endl;
   std::cout << "Build Type       : " << BUILD_BUILD_TYPE << std::endl;
+  std::cout << "CXX Flags        : " << BUILD_CXX_FLAGS << std::endl;
 }
 
 int main(void) {
