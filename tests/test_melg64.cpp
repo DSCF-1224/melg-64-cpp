@@ -33,6 +33,8 @@ void PrintBuildInfo() {
   std::cout << "std              : C++" << BUILD_CXX_STANDARD << std::endl;
   std::cout << "Build Type       : " << BUILD_BUILD_TYPE << std::endl;
   std::cout << "CXX Flags        : " << BUILD_CXX_FLAGS << std::endl;
+
+  const std::string_view build_type = BUILD_BUILD_TYPE;
 }
 
 int main(void) {
