@@ -20,4 +20,6 @@
 
 #include <melg64/melg64.hpp>
 
+#include "build_info.hpp"
+
 int main(void) { return EXIT_SUCCESS; }
