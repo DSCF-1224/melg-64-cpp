@@ -49,6 +49,8 @@ namespace melg64 {
 
 using result_type = std::uint_fast64_t;
 
+static_assert(std::unsigned_integral<melg64::result_type>);
+
 class melg_base {
  public:
   // Requirements
