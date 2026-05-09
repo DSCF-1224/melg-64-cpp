@@ -27,6 +27,10 @@
 // https://cppreference.com/cpp/header/concepts
 // https://cpprefjp.github.io/reference/concepts.html
 
+#include <cstddef>
+// https://cppreference.com/cpp/header/cstddef
+// https://cpprefjp.github.io/reference/cstddef.html
+
 #include <cstdint>
 // https://cppreference.com/cpp/header/cstdint
 // https://cpprefjp.github.io/reference/cstdint.html
