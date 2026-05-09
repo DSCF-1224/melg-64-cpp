@@ -57,6 +57,9 @@ class melg_base {
 
   using result_type = melg64::result_type;
 
+  static constexpr melg64::result_type default_seed =
+      static_cast<melg64::result_type>(19650218UL);
+
   /**
    * @brief Yields the smallest value that `melg_base`'s `operator()` may return
    */
