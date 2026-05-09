@@ -19,8 +19,6 @@
 // =============================================================================
 #ifndef MELG64_H_
 
-namespace melg64 {
-
 #include <array>
 // https://cppreference.com/cpp/header/array
 // https://cpprefjp.github.io/reference/array.html
@@ -50,6 +48,8 @@ namespace melg64 {
 // https://cppreference.com/cpp/numeric/random/uniform_random_bit_generator
 // https://cpprefjp.github.io/reference/random.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
+
+namespace melg64 {
 
 using result_type = std::uint_fast64_t;
 
