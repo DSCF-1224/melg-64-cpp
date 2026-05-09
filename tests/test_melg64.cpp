@@ -35,6 +35,24 @@ void PrintBuildInfo() {
   std::cout << "CXX Flags        : " << BUILD_CXX_FLAGS << std::endl;
 
   const std::string_view build_type = BUILD_BUILD_TYPE;
+
+  if (!build_type.empty()) {
+    std::cout << "Type Flags       : ";
+  } else {
+    return;
+  }
+
+  if (build_type == "Debug") {
+    std::cout << BUILD_CXX_FLAGS_DEBUG;
+  } else if (build_type == "Release") {
+    std::cout << BUILD_CXX_FLAGS_RELEASE;
+  } else if (build_type == "RelWithDebInfo") {
+    std::cout << BUILD_CXX_FLAGS_RELWITHDEBINFO;
+  } else if (build_type == "MinSizeRel") {
+    std::cout << BUILD_CXX_FLAGS_MINSIZEREL;
+  }
+
+  std::cout << std::endl << std::endl;
 }
 
 int main(void) {
