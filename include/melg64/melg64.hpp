@@ -59,6 +59,7 @@ using result_type = std::uint_fast64_t;
 
 static_assert(std::unsigned_integral<melg64::result_type>);
 
+template <std::size_t __NN>
 class melg_base {
  public:
   // Requirements
@@ -91,8 +92,6 @@ class melg_base {
 
  private:
 };
-
-static_assert(std::uniform_random_bit_generator<melg64::melg_base>);
 
 }  // namespace melg64
 
