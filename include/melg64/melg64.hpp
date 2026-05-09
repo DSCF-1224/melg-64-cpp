@@ -91,6 +91,7 @@ class melg_base {
   }
 
  private:
+  static constexpr inline std::size_t NN = __NN;
 };
 
 using melg607 = melg_base<9>;
