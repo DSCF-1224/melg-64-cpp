@@ -94,6 +94,11 @@ class melg_base {
   static constexpr inline std::size_t NN = __NN;
 
   melg64::result_type state_[NN];
+
+  /**
+   * @brief extra state variable
+   */
+  melg64::result_type lung_;
 };
 
 using melg607 = melg_base<9>;
