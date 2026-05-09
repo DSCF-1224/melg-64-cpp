@@ -93,7 +93,29 @@ class melg_base {
  private:
 };
 
+using melg607 = melg_base<9>;
+
+using melg1279 = melg_base<19>;
+
+using melg2281 = melg_base<35>;
+
+using melg4253 = melg_base<66>;
+
+using melg11213 = melg_base<175>;
+
+using melg19937 = melg_base<311>;
+
+using melg44497 = melg_base<695>;
+
 }  // namespace melg64
+
+static_assert(std::uniform_random_bit_generator<melg64::melg607>);
+static_assert(std::uniform_random_bit_generator<melg64::melg1279>);
+static_assert(std::uniform_random_bit_generator<melg64::melg2281>);
+static_assert(std::uniform_random_bit_generator<melg64::melg4253>);
+static_assert(std::uniform_random_bit_generator<melg64::melg11213>);
+static_assert(std::uniform_random_bit_generator<melg64::melg19937>);
+static_assert(std::uniform_random_bit_generator<melg64::melg44497>);
 
 #define MELG64_H_
 #endif /* MELG64_H_ */
