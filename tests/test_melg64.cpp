@@ -19,11 +19,40 @@
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
 #include <melg64/melg64.hpp>
+// target of this test
+
+#include <string_view>
+// https://cppreference.com/cpp/header/string_view
+// https://cpprefjp.github.io/reference/string_view.html
 
 #include "build_info.hpp"
 
 void PrintBuildInfo() {
-  std::cout << "Compiler ID : " << BUILD_COMPILER_ID << std::endl;
+  std::cout << "Compiler ID      : " << BUILD_COMPILER_ID << std::endl;
+  std::cout << "Compiler Version : " << BUILD_COMPILER_VERSION << std::endl;
+  std::cout << "std              : C++" << BUILD_CXX_STANDARD << std::endl;
+  std::cout << "Build Type       : " << BUILD_BUILD_TYPE << std::endl;
+  std::cout << "CXX Flags        : " << BUILD_CXX_FLAGS << std::endl;
+
+  const std::string_view build_type = BUILD_BUILD_TYPE;
+
+  if (!build_type.empty()) {
+    std::cout << "Type Flags       : ";
+  } else {
+    return;
+  }
+
+  if (build_type == "Debug") {
+    std::cout << BUILD_CXX_FLAGS_DEBUG;
+  } else if (build_type == "Release") {
+    std::cout << BUILD_CXX_FLAGS_RELEASE;
+  } else if (build_type == "RelWithDebInfo") {
+    std::cout << BUILD_CXX_FLAGS_RELWITHDEBINFO;
+  } else if (build_type == "MinSizeRel") {
+    std::cout << BUILD_CXX_FLAGS_MINSIZEREL;
+  }
+
+  std::cout << std::endl << std::endl;
 }
 
 int main(void) {
