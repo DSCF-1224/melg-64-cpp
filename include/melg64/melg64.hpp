@@ -21,6 +21,10 @@
 
 namespace melg64 {
 
+#include <array>
+// https://cppreference.com/cpp/header/array
+// https://cpprefjp.github.io/reference/array.html
+
 #include <concepts>
 // https://cppreference.com/cpp/header/concepts
 // https://cpprefjp.github.io/reference/concepts.html
@@ -80,6 +84,8 @@ class melg_base {
   melg64::result_type operator()() {
     return static_cast<melg64::result_type>(0);
   }
+
+ private:
 };
 
 static_assert(std::uniform_random_bit_generator<melg64::melg_base>);
