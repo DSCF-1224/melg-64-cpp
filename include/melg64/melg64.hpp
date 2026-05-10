@@ -93,6 +93,8 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
+  static constexpr inline std::size_t MM = __MM;
+
   static constexpr inline std::size_t NN = __NN;
 
   std::size_t i_;
