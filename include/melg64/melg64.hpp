@@ -59,7 +59,7 @@ using result_type = std::uint_fast64_t;
 
 static_assert(std::unsigned_integral<melg64::result_type>);
 
-template <std::size_t __NN, std::size_t __MM>
+template <std::size_t __NN, std::size_t __MM, melg64::result_type __MATRIX_A>
 class melg_base {
  public:
   // Requirements
@@ -140,19 +140,19 @@ class melg_base {
   }
 };
 
-using melg607 = melg_base<9, 5>;
+using melg607 = melg_base<9, 5, 0x81f1fd68012348bcUL>;
 
-using melg1279 = melg_base<19, 7>;
+using melg1279 = melg_base<19, 7, 0x1afefd1526d3952bUL>;
 
-using melg2281 = melg_base<35, 17>;
+using melg2281 = melg_base<35, 17, 0x7cbe23ebca8a6d36UL>;
 
-using melg4253 = melg_base<66, 29>;
+using melg4253 = melg_base<66, 29, 0xfac1e8c56471d722UL>;
 
-using melg11213 = melg_base<175, 45>;
+using melg11213 = melg_base<175, 45, 0xddbcd6e525e1c757UL>;
 
-using melg19937 = melg_base<311, 81>;
+using melg19937 = melg_base<311, 81, 0x5c32e06df730fc42UL>;
 
-using melg44497 = melg_base<695, 373>;
+using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL>;
 
 }  // namespace melg64
 
