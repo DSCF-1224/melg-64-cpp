@@ -186,12 +186,12 @@ class melg_base {
     return x ^ melg_base::mat3pos(melg_base::SHIFT_LUNG, this->lung_);
   }
 
-  constexpr melg64::result_type next_x() noexcept {
-    return this->next_x(this->i_, this->i_ + static_cast<std::size_t>(1));
+  constexpr melg64::result_type next_x_1st() noexcept {
+    return this->next_x_1st(this->i_, this->i_ + static_cast<std::size_t>(1));
   }
 
-  constexpr melg64::result_type next_x(const std::size_t i_u,
-                                       const std::size_t i_l) noexcept {
+  constexpr melg64::result_type next_x_1st(const std::size_t i_u,
+                                           const std::size_t i_l) noexcept {
     return (this->state_[i_u] & this->mask_u) |
            (this->state_[i_l] & this->mask_l);
   }
