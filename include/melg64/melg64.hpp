@@ -106,6 +106,16 @@ class melg_base {
 
   FuncPtr next_;
 
+  static constexpr melg64::result_type mat3neg(
+      const int t, const melg64::result_type v) noexcept {
+    return v ^ (v << t);
+  }
+
+  static constexpr melg64::result_type mat3pos(
+      const int t, const melg64::result_type v) noexcept {
+    return v ^ (v >> t);
+  }
+
   constexpr void initialize_member_i(void) noexcept {
     this->i_ = static_cast<std::size_t>(0);
   }
