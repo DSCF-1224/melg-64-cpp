@@ -94,6 +94,8 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
+  static constexpr inline std::size_t LAG1 = __LAG1;
+
   static constexpr inline melg64::result_type mag01[2] = {
       static_cast<melg64::result_type>(0), __MATRIX_A};
 
