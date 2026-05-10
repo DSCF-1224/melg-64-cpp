@@ -119,6 +119,23 @@ class melg_base {
   constexpr void initialize_member_i(void) noexcept {
     this->i_ = static_cast<std::size_t>(0);
   }
+
+  constexpr void initialize_member_state(const melg64::result_type seed) {
+    constexpr melg64::result_type multiplier =
+        static_cast<melg64::result_type>(6364136223846793005UL);
+
+    this->state_[0] = seed;
+
+    std::size_t i = static_cast<std::size_t>(1);
+
+    for (; i < this->NN; i++) {
+      this->state_[i] =
+          multiplier * melg_base::mat3pos(62, this->state_[i - 1]) + this->i_;
+    }
+
+    this->lung_ =
+        multiplier * melg_base::mat3pos(62, this->state_[i - 1]) + this->i_;
+  }
 };
 
 using melg607 = melg_base<9>;
