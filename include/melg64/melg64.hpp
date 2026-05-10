@@ -100,6 +100,8 @@ class melg_base {
   static constexpr inline melg64::result_type mag01[2] = {
       static_cast<melg64::result_type>(0), __MATRIX_A};
 
+  static constexpr inline melg64::result_type MASK1 = __MASK1;
+
   static constexpr inline std::size_t MM = __MM;
 
   static constexpr inline std::size_t NN = __NN;
