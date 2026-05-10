@@ -101,6 +101,8 @@ class melg_base {
 
   static constexpr inline std::size_t NN = __NN;
 
+  static constexpr inline int P = __P;
+
   std::size_t i_;
 
   melg64::result_type state_[NN];
