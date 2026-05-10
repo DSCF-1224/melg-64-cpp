@@ -103,6 +103,8 @@ class melg_base {
    * @brief extra state variable
    */
   melg64::result_type lung_;
+
+  FuncPtr next_;
 };
 
 using melg607 = melg_base<9>;
