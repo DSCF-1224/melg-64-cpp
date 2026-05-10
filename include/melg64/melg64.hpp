@@ -60,7 +60,7 @@ using result_type = std::uint_fast64_t;
 static_assert(std::unsigned_integral<melg64::result_type>);
 
 template <std::size_t __NN, std::size_t __MM, melg64::result_type __MATRIX_A,
-          int __P, std::size_t __LAG1>
+          int __P, std::size_t __LAG1, int __SHIFT1>
 class melg_base {
  public:
   // Requirements
@@ -104,8 +104,8 @@ class melg_base {
   static constexpr inline std::size_t NN = __NN;
 
   static constexpr inline std::size_t LAG1OVER =
-      melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1>::NN -
-      melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1>::LAG1;
+      melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1>::NN -
+      melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1>::LAG1;
 
   static constexpr inline int P = __P;
 
@@ -113,11 +113,11 @@ class melg_base {
 
   static constexpr inline melg64::result_type mask_u =
       (~static_cast<melg64::result_type>(0))
-      << (melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1>::W -
-          melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1>::P);
+      << (melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1>::W -
+          melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1>::P);
 
   static constexpr inline melg64::result_type mask_l =
-      ~melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1>::mask_u;
+      ~melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1>::mask_u;
 
   std::size_t i_;
 
@@ -180,19 +180,19 @@ class melg_base {
   }
 };
 
-using melg607 = melg_base<9, 5, 0x81f1fd68012348bcUL, 31, 3>;
+using melg607 = melg_base<9, 5, 0x81f1fd68012348bcUL, 31, 3, 30>;
 
-using melg1279 = melg_base<19, 7, 0x1afefd1526d3952bUL, 63, 5>;
+using melg1279 = melg_base<19, 7, 0x1afefd1526d3952bUL, 63, 5, 6>;
 
-using melg2281 = melg_base<35, 17, 0x7cbe23ebca8a6d36UL, 41, 6>;
+using melg2281 = melg_base<35, 17, 0x7cbe23ebca8a6d36UL, 41, 6, 6>;
 
-using melg4253 = melg_base<66, 29, 0xfac1e8c56471d722UL, 29, 9>;
+using melg4253 = melg_base<66, 29, 0xfac1e8c56471d722UL, 29, 9, 5>;
 
-using melg11213 = melg_base<175, 45, 0xddbcd6e525e1c757UL, 13, 4>;
+using melg11213 = melg_base<175, 45, 0xddbcd6e525e1c757UL, 13, 4, 5>;
 
-using melg19937 = melg_base<311, 81, 0x5c32e06df730fc42UL, 33, 19>;
+using melg19937 = melg_base<311, 81, 0x5c32e06df730fc42UL, 33, 19, 16>;
 
-using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95>;
+using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95, 30>;
 
 }  // namespace melg64
 
