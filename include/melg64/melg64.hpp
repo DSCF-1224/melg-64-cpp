@@ -156,6 +156,12 @@ class melg_base {
       const int t, const melg64::result_type v) noexcept {
     return v ^ (v >> t);
   }
+
+  constexpr melg64::result_type x(const std::size_t i_u,
+                                  const std::size_t i_l) noexcept {
+    return (this->state_[i_u] & this->mask_u) |
+           (this->state_[i_l] & this->mask_l);
+  }
 };
 
 using melg607 = melg_base<9, 5, 0x81f1fd68012348bcUL, 31>;
