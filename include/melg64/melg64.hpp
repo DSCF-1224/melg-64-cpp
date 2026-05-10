@@ -157,6 +157,12 @@ class melg_base {
     return v ^ (v >> t);
   }
 
+  constexpr melg64::result_type next_lung(const melg64::result_type x,
+                                          const std::size_t i) noexcept {
+    return (x >> 1) ^ this->mag01[x & static_cast<melg64::result_type>(1)] ^
+           this->state_[i] ^ melg_base::mat3neg(37, this->lung_);
+  }
+
   constexpr melg64::result_type next_x() noexcept {
     return this->next_x(this->i_, this->i_ + static_cast<std::size_t>(1));
   }
