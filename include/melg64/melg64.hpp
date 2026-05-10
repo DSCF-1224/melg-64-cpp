@@ -105,6 +105,10 @@ class melg_base {
   melg64::result_type lung_;
 
   FuncPtr next_;
+
+  constexpr void initialize_member_i(void) noexcept {
+    this->i_ = static_cast<std::size_t>(0);
+  }
 };
 
 using melg607 = melg_base<9>;
