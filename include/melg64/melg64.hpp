@@ -203,7 +203,7 @@ class melg_base {
 
   constexpr melg64::result_type next_x_3rd(const melg64::result_type x_2nd,
                                            const int lag1) noexcept {
-    return x_2nd ^ (this.state_[this->i_ + lag1] & this->MASK1);
+    return x_2nd ^ (this->state_[this->i_ + lag1] & this->MASK1);
   }
 };
 
