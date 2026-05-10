@@ -173,6 +173,86 @@ class melg_base {
     return v ^ (v >> t);
   }
 
+  constexpr melg64::result_type next_case1() noexcept {
+    melg64::result_type x = next_x_1st();
+
+    this->lung_ = this->next_lung(x, this->i_ + this->MM);
+
+    this->state_[this->i_] = this->next_state(x);
+
+    x = this->next_x_2nd();
+
+    x = this->next_x_3rd(x, this->LAG1);
+
+    ++this->i_;
+
+    if (this->i_ == this->NN - this->MM) {
+      this->next_ = &this->next_case2;
+    }
+
+    return x;
+  }
+
+  constexpr melg64::result_type next_case2() noexcept {
+    melg64::result_type x = this->next_x_1st();
+
+    this->lung_ = this->next_lung(x, this->i_ + this->MM - this->NN);
+
+    this->state_[this->i_] = this->next_state(x);
+
+    x = this->next_x_2nd();
+
+    x = this->next_x_3rd(x, this->LAG1);
+
+    ++this->i_;
+
+    if (this->i_ == this->LAG1OVER) {
+      this->next_ = &this->next_case3;
+    }
+
+    return x;
+  }
+
+  constexpr melg64::result_type next_case3() noexcept {
+    melg64::result_type x = this->next_x_1st();
+
+    this->lung_ = this->next_lung(x, this->i_ + this->MM - this->NN);
+
+    this->state_[this->i_] = this->next_state(x);
+
+    x = this->next_x_2nd();
+
+    x = this->next_x_3rd(x, -this->LAG1OVER);
+
+    ++this->i_;
+
+    if (this->i_ == this->NN - static_cast<std::size_t>(1)) {
+      this->next_ = &this->next_case4;
+    }
+
+    return x;
+  }
+
+  constexpr melg64::result_type next_case4() noexcept {
+    melg64::result_type x =
+        this->next_x_1st(this->NN - static_cast<std::size_t>(1), 0);
+
+    this->lung_ =
+        this->next_lung(x, this->i_ + this->MM - static_cast<std::size_t>(1));
+
+    this->state_[this->i_] = this->next_state(x);
+
+    x = this->next_x_2nd();
+
+    x = this->next_x_3rd(x, -this->LAG1OVER);
+
+    this->i_ = static_cast<std::size_t>(0);
+
+    this->next_ = &this->next_case4;
+
+    return x;
+  }
+
   constexpr melg64::result_type next_lung(const melg64::result_type x,
                                           const std::size_t i) noexcept {
     return (x >> 1) ^ this->mag01[x & static_cast<melg64::result_type>(1)] ^
