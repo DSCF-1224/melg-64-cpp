@@ -114,6 +114,8 @@ class melg_base {
 
   static constexpr inline int P = __P;
 
+  static constexpr inline int SHIFT_LUNG = __SHIFT_LUNG;
+
   static constexpr inline int SHIFT1 = __SHIFT1;
 
   static constexpr inline int W = 64;
