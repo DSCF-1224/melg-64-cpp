@@ -126,15 +126,17 @@ class melg_base {
 
     this->state_[0] = seed;
 
-    std::size_t i = static_cast<std::size_t>(1);
+    this->i_ = static_cast<std::size_t>(1);
 
-    for (; i < this->NN; i++) {
-      this->state_[i] =
-          multiplier * melg_base::mat3pos(62, this->state_[i - 1]) + this->i_;
+    for (; this->i_ < this->NN; this->i_++) {
+      this->state_[this->i_] =
+          multiplier * melg_base::mat3pos(62, this->state_[this->i_ - 1]) +
+          this->i_;
     }
 
     this->lung_ =
-        multiplier * melg_base::mat3pos(62, this->state_[i - 1]) + this->i_;
+        multiplier * melg_base::mat3pos(62, this->state_[this->i_ - 1]) +
+        this->i_;
   }
 
   static constexpr melg64::result_type mat3neg(
