@@ -157,6 +157,10 @@ class melg_base {
     return v ^ (v >> t);
   }
 
+  constexpr melg64::result_type x() noexcept {
+    return this->x(this->i_, this->i_ + static_cast<std::size_t>(1));
+  }
+
   constexpr melg64::result_type x(const std::size_t i_u,
                                   const std::size_t i_l) noexcept {
     return (this->state_[i_u] & this->mask_u) |
