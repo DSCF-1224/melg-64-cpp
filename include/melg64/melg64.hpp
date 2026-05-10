@@ -196,8 +196,7 @@ class melg_base {
            (this->state_[i_l] & this->mask_l);
   }
 
-  constexpr melg64::result_type next_x_2nd(
-      const melg64::result_type x_1st) noexcept {
+  constexpr melg64::result_type next_x_2nd() noexcept {
     return melg_base::mat3neg(melg_base::SHIFT1, this->state_[this->i_]);
   }
 
