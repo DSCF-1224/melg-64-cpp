@@ -105,6 +105,11 @@ class melg_base {
 
   static constexpr inline int W = 64;
 
+  static constexpr inline melg64::result_type mask_u =
+      (~static_cast<melg64::result_type>(0))
+      << (melg64::melg_base<__NN, __MM, __MATRIX_A, __P>::W -
+          melg64::melg_base<__NN, __MM, __MATRIX_A, __P>::P);
+
   std::size_t i_;
 
   melg64::result_type state_[NN];
