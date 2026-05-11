@@ -252,7 +252,7 @@ class melg_base {
 
     this->initialize_member_i();
 
-    this->next_ = &this->next_case4;
+    this->initialize_member_next();
 
     return x;
   }
