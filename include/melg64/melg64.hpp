@@ -53,6 +53,10 @@
 // https://cpprefjp.github.io/reference/random.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
+#include <span>
+// https://cppreference.com/cpp/header/span
+// https://cpprefjp.github.io/reference/span.html
+
 namespace melg64 {
 
 using result_type = std::uint_fast64_t;
