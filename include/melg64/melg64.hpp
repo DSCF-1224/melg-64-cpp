@@ -23,6 +23,10 @@
 // https://cppreference.com/cpp/header/array
 // https://cpprefjp.github.io/reference/array.html
 
+#include <cassert>
+// https://cppreference.com/cpp/header/cassert
+// https://cpprefjp.github.io/reference/cassert.html
+
 #include <concepts>
 // https://cppreference.com/cpp/header/concepts
 // https://cpprefjp.github.io/reference/concepts.html
