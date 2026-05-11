@@ -250,7 +250,7 @@ class melg_base {
 
     x = this->next_x_3rd(x, -this->LAG1OVER);
 
-    this->i_ = static_cast<std::size_t>(0);
+    this->initialize_member_i();
 
     this->next_ = &this->next_case4;
 
