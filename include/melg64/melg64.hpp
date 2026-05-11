@@ -163,6 +163,10 @@ class melg_base {
         multiplier * this->mat3pos(62, this->state_[this->i_ - 1]) + this->i_;
   }
 
+  constexpr void initialize_member_next() noexcept {
+    this->next_ = &this->next_case1;
+  }
+
   static constexpr melg64::result_type mat3neg(
       const int t, const melg64::result_type v) noexcept {
     return v ^ (v << t);
