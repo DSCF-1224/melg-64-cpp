@@ -18,6 +18,7 @@
 //   April 2018, Article No. 30.
 // =============================================================================
 #ifndef MELG64_H_
+#define MELG64_H_
 
 #include <algorithm>
 // https://cppreference.com/cpp/header/algorithm
@@ -409,5 +410,4 @@ static_assert(std::uniform_random_bit_generator<melg64::melg11213>);
 static_assert(std::uniform_random_bit_generator<melg64::melg19937>);
 static_assert(std::uniform_random_bit_generator<melg64::melg44497>);
 
-#define MELG64_H_
 #endif /* MELG64_H_ */
