@@ -132,11 +132,7 @@ class melg_base {
 
   static constexpr inline std::size_t NN = __NN;
 
-  static constexpr inline std::size_t LAG1OVER =
-      melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1, __MASK1,
-                        __SHIFT_LUNG>::NN -
-      melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1, __MASK1,
-                        __SHIFT_LUNG>::LAG1;
+  static constexpr inline std::size_t LAG1OVER = __NN - __LAG1;
 
   static constexpr inline int P = __P;
 
