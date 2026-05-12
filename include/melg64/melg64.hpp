@@ -19,6 +19,10 @@
 // =============================================================================
 #ifndef MELG64_H_
 
+#include <algorithm>
+// https://cppreference.com/cpp/header/algorithm
+// https://cpprefjp.github.io/reference/algorithm.html
+
 #include <array>
 // https://cppreference.com/cpp/header/array
 // https://cpprefjp.github.io/reference/array.html
