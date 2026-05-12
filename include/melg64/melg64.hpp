@@ -205,7 +205,7 @@ class melg_base {
     for (; k; k--) {
       this->state_[i] =
           (this->state_[i] ^
-           (this ^ this->mat3pos(62, this->state_[i - 1]) * multiplier1)) +
+           (this->mat3pos(62, this->state_[i - 1]) * multiplier1)) +
           init_key[j] + j; /* non linear */
 
       i++;
@@ -222,7 +222,7 @@ class melg_base {
     for (k = this->NN - 1; k; k--) {
       this->state_[i] =
           (this->state_[i] ^
-           (this ^ this->mat3pos(62, this->state_[i - 1]) * multiplier2)) -
+           (this->mat3pos(62, this->state_[i - 1]) * multiplier2)) -
           i; /* non linear */
 
       i++;
@@ -235,7 +235,7 @@ class melg_base {
 
     this->lung_ =
         (this->lung_ ^
-         (this ^ this->mat3pos(62, this->state_[this->NN - 1]) * multiplier2)) -
+         (this->mat3pos(62, this->state_[this->NN - 1]) * multiplier2)) -
         this->NN; /* non linear */
 
     this->state_[0] =
