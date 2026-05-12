@@ -117,7 +117,6 @@ class melg_base {
   constexpr void seed(std::span<const melg64::result_type> init_key) {
     assert(!init_key.empty());
 
-    this->seed(this->default_seed);
     this->initialize_member_state(init_key);
     this->initialize_member_i();
   }
