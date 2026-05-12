@@ -113,6 +113,14 @@ class melg_base {
     this->initialize_member_next();
   }
 
+  constexpr void seed(std::span<const melg64::result_type> init_key) {
+    assert(!init_key.empty());
+
+    this->seed(this->default_seed);
+    this->initialize_member_state(init_key);
+    this->initialize_member_i();
+  }
+
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
