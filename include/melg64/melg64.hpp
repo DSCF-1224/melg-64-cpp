@@ -318,8 +318,7 @@ class melg_base {
     melg64::result_type x =
         this->next_x_1st(this->NN - static_cast<std::size_t>(1), 0);
 
-    this->lung_ =
-        this->next_lung(x, this->i_ + this->MM - static_cast<std::size_t>(1));
+    this->lung_ = this->next_lung(x, this->MM - static_cast<std::size_t>(1));
 
     this->state_[this->i_] = this->next_state(x);
 
