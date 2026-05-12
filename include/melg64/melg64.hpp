@@ -184,6 +184,66 @@ class melg_base {
         multiplier * this->mat3pos(62, this->state_[this->i_ - 1]) + this->i_;
   }
 
+  constexpr void initialize_member_state(
+      std::span<const melg64::result_type> init_key) noexcept {
+    constexpr melg64::result_type multiplier1 =
+        static_cast<melg64::result_type>(3935559000370003845ULL);
+
+    constexpr melg64::result_type multiplier2 =
+        static_cast<melg64::result_type>(2862933555777941757ULL);
+
+    const melg64::result_type initial_i = static_cast<melg64::result_type>(1);
+    const melg64::result_type initial_j = static_cast<melg64::result_type>(0);
+
+    const melg64::result_type key_length = (melg64::result_type)init_key.size();
+
+    this->seed(this->default_seed);
+
+    melg64::result_type i = initial_i;
+    melg64::result_type j = initial_j;
+
+    for (; k; k--) {
+      this->state_[i] =
+          (this->state_[i] ^
+           (this ^ this->mat3pos(62, this->state_[i - 1]) * multiplier1)) +
+          init_key[j] + j; /* non linear */
+
+      i++;
+      j++;
+
+      if (i >= this->NN) {
+        this->state_[0] = this->state_[this->NN - 1];
+        i = initial_i;
+      }
+
+      if (j >= key_length) j = initial_j;
+    }
+
+    for (k = this->NN - 1; k; k--) {
+      this->state_[i] =
+          (this->state_[i] ^
+           (this ^ this->mat3pos(62, this->state_[i - 1]) * multiplier2)) -
+          i; /* non linear */
+
+      i++;
+
+      if (i >= this->NN) {
+        this->state_[0] = this->state_[this->NN - 1];
+        i = initial_i;
+      }
+    }
+
+    this->lung_ =
+        (this->lung_ ^
+         (this ^ this->mat3pos(62, this->state_[this->NN - 1]) * multiplier2)) -
+        this->NN; /* non linear */
+
+    this->state_[0] =
+        (this->state_[0] |
+         (static_cast<melg64::result_type>(1)
+          << 63)); /* MSB is 1; assuring non-zero initial array. Corrected. */
+  }
+
   static constexpr melg64::result_type mat3neg(
       const int t, const melg64::result_type v) noexcept {
     return v ^ (v << t);
