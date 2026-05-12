@@ -145,9 +145,7 @@ class melg_base {
   static constexpr inline melg64::result_type mask_u =
       (~static_cast<melg64::result_type>(0)) << (W - __P);
 
-  static constexpr inline melg64::result_type mask_l =
-      ~melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1, __MASK1,
-                         __SHIFT_LUNG>::mask_u;
+  static constexpr inline melg64::result_type mask_l = ~mask_u;
 
   std::size_t i_;
 
