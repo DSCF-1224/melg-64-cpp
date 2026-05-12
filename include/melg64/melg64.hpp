@@ -205,6 +205,7 @@ class melg_base {
 
     melg64::result_type i = initial_i;
     melg64::result_type j = initial_j;
+    melg64::result_type k = std::max(this->NN, key_length);
 
     for (; k; k--) {
       this->state_[i] =
