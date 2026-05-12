@@ -105,10 +105,7 @@ class melg_base {
     return static_cast<melg64::result_type>(0);
   }
 
-  constexpr void seed(
-      const melg64::result_type s =
-          melg64::melg_base<__NN, __MM, __MATRIX_A, __P, __LAG1, __SHIFT1,
-                            __MASK1, __SHIFT_LUNG>::default_seed) {
+  constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
     this->initialize_member_i();
     this->initialize_member_next();
