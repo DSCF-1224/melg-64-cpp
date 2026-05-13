@@ -74,7 +74,7 @@ static_assert(std::unsigned_integral<melg64::result_type>);
 
 template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
           int __P, std::size_t __Lag1, int __Shift1,
-          melg64::result_type __Mask1, int __ShiftLungPos>
+          melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
 class melg_base {
  public:
   // Requirements
@@ -364,26 +364,26 @@ class melg_base {
   }
 };
 
-using melg607 =
-    melg_base<9, 5, 0x81f1fd68012348bcUL, 31, 3, 30, 0x66edc62a6bf8c826UL, 35>;
+using melg607 = melg_base<9, 5, 0x81f1fd68012348bcUL, 31, 3, 30,
+                          0x66edc62a6bf8c826UL, 35, 13>;
 
-using melg1279 =
-    melg_base<19, 7, 0x1afefd1526d3952bUL, 63, 5, 6, 0x3a23d78e8fb5e349UL, 37>;
+using melg1279 = melg_base<19, 7, 0x1afefd1526d3952bUL, 63, 5, 6,
+                           0x3a23d78e8fb5e349UL, 37, 22>;
 
-using melg2281 =
-    melg_base<35, 17, 0x7cbe23ebca8a6d36UL, 41, 6, 6, 0xe4e2242b6e15aebeUL, 21>;
+using melg2281 = melg_base<35, 17, 0x7cbe23ebca8a6d36UL, 41, 6, 6,
+                           0xe4e2242b6e15aebeUL, 21, 36>;
 
-using melg4253 =
-    melg_base<66, 29, 0xfac1e8c56471d722UL, 29, 9, 5, 0xcb67b0c18fe14f4dUL, 20>;
+using melg4253 = melg_base<66, 29, 0xfac1e8c56471d722UL, 29, 9, 5,
+                           0xcb67b0c18fe14f4dUL, 20, 30>;
 
 using melg11213 = melg_base<175, 45, 0xddbcd6e525e1c757UL, 13, 4, 5,
-                            0xbd2d1251e589593fUL, 13>;
+                            0xbd2d1251e589593fUL, 13, 33>;
 
 using melg19937 = melg_base<311, 81, 0x5c32e06df730fc42UL, 33, 19, 16,
-                            0x6aede6fd97b338ecUL, 33>;
+                            0x6aede6fd97b338ecUL, 33, 23>;
 
 using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95, 30,
-                            0x6fbbee29aaefd91UL, 14>;
+                            0x6fbbee29aaefd91UL, 14, 37>;
 
 }  // namespace melg64
 
