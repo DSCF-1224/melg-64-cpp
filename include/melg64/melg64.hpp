@@ -136,6 +136,8 @@ class melg_base {
 
   static constexpr inline int P = __P;
 
+  static constexpr inline int ShiftLungNeg = __ShiftLungNeg;
+
   static constexpr inline int ShiftLungPos = __ShiftLungPos;
 
   static constexpr inline int Shift1 = __Shift1;
