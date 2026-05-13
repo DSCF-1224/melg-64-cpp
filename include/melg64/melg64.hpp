@@ -74,7 +74,7 @@ static_assert(std::unsigned_integral<melg64::result_type>);
 
 template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
           int __P, std::size_t __Lag1, int __Shift1,
-          melg64::result_type __Mask1, int __ShiftLung>
+          melg64::result_type __Mask1, int __ShiftLungPos>
 class melg_base {
  public:
   // Requirements
@@ -136,7 +136,7 @@ class melg_base {
 
   static constexpr inline int P = __P;
 
-  static constexpr inline int ShiftLung = __ShiftLung;
+  static constexpr inline int ShiftLungPos = __ShiftLungPos;
 
   static constexpr inline int Shift1 = __Shift1;
 
@@ -341,7 +341,7 @@ class melg_base {
 
   constexpr melg64::result_type next_state(
       const melg64::result_type x) noexcept {
-    return x ^ this->mat3pos(this->ShiftLung, this->lung_);
+    return x ^ this->mat3pos(this->ShiftLungPos, this->lung_);
   }
 
   constexpr melg64::result_type next_x_1st() noexcept {
