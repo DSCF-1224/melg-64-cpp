@@ -338,7 +338,7 @@ class melg_base {
   constexpr melg64::result_type next_lung(const melg64::result_type x,
                                           const std::size_t i) noexcept {
     return (x >> 1) ^ this->mag01[x & static_cast<melg64::result_type>(1)] ^
-           this->state_[i] ^ this->mat3neg(37, this->lung_);
+           this->state_[i] ^ this->mat3neg(this->ShiftLungNeg, this->lung_);
   }
 
   constexpr melg64::result_type next_state(
