@@ -38,7 +38,9 @@
 
 #include <cstddef>
 // https://cppreference.com/cpp/header/cstddef
+// https://cppreference.com/cpp/types/ptrdiff_t
 // https://cpprefjp.github.io/reference/cstddef.html
+// https://cpprefjp.github.io/reference/cstddef/ptrdiff_t.html
 
 #include <cstdint>
 // https://cppreference.com/cpp/header/cstdint
@@ -73,7 +75,7 @@ using result_type = std::uint_fast64_t;
 static_assert(std::unsigned_integral<melg64::result_type>);
 
 template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
-          int __P, std::size_t __Lag1, int __Shift1,
+          int __P, std::ptrdiff_t __Lag1, int __Shift1,
           melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
 class melg_base {
  public:
@@ -121,7 +123,7 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
-  static constexpr inline std::size_t Lag1 = __Lag1;
+  static constexpr inline std::ptrdiff_t Lag1 = __Lag1;
 
   static constexpr inline melg64::result_type mag01[2] = {
       static_cast<melg64::result_type>(0), __MatrixA};
@@ -132,7 +134,8 @@ class melg_base {
 
   static constexpr inline std::size_t NN = __NN;
 
-  static constexpr inline std::size_t Lag1Over = __NN - __Lag1;
+  static constexpr inline std::ptrdiff_t Lag1Over =
+      static_cast<std::ptrdiff_t>(__NN) - __Lag1;
 
   static constexpr inline int P = __P;
 
