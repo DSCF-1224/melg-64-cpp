@@ -292,7 +292,7 @@ class melg_base {
 
     ++this->i_;
 
-    if (this->i_ == this->Lag1Over) {
+    if (this->i_ == static_cast<std::size_t>(this->Lag1Over)) {
       this->next_ = &this->next_case3;
     }
 
