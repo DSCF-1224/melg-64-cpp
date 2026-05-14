@@ -241,7 +241,7 @@ class melg_base {
     this->lung_ =
         (this->lung_ ^
          (this->mat3pos(62, this->state_[this->NN - 1]) * multiplier2)) -
-        this->NN; /* non linear */
+        static_cast<melg64::result_type>(this->NN); /* non linear */
 
     this->state_[0] =
         (this->state_[0] |
