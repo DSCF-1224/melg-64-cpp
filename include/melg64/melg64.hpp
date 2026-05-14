@@ -365,7 +365,8 @@ class melg_base {
 
   constexpr melg64::result_type next_x_3rd(const melg64::result_type x_2nd,
                                            const std::ptrdiff_t lag1) noexcept {
-    return x_2nd ^ (this->state_[this->i_ + lag1] & this->Mask1);
+    return x_2nd ^ (this->state_[static_cast<std::ptrdiff_t>(this->i_) + lag1] &
+                    this->Mask1);
   }
 };
 
