@@ -198,20 +198,20 @@ class melg_base {
     constexpr melg64::result_type multiplier2 =
         static_cast<melg64::result_type>(2862933555777941757ULL);
 
-    const melg64::result_type initial_i = static_cast<melg64::result_type>(1);
-    const melg64::result_type initial_j = static_cast<melg64::result_type>(0);
+    const std::size_t initial_i = static_cast<std::size_t>(1);
+    const std::size_t initial_j = static_cast<std::size_t>(0);
 
-    const melg64::result_type key_length = (melg64::result_type)init_key.size();
+    const std::size_t key_length = (std::size_t)init_key.size();
 
-    melg64::result_type i = initial_i;
-    melg64::result_type j = initial_j;
-    melg64::result_type k = std::max(this->NN, key_length);
+    std::size_t i = initial_i;
+    std::size_t j = initial_j;
+    std::size_t k = std::max(this->NN, key_length);
 
     for (; k; k--) {
       this->state_[i] =
           (this->state_[i] ^
            (this->mat3pos(62, this->state_[i - 1]) * multiplier1)) +
-          init_key[j] + j; /* non linear */
+          init_key[j] + static_cast<melg64::result_type>(j); /* non linear */
 
       i++;
       j++;
@@ -228,7 +228,7 @@ class melg_base {
       this->state_[i] =
           (this->state_[i] ^
            (this->mat3pos(62, this->state_[i - 1]) * multiplier2)) -
-          i; /* non linear */
+          static_cast<melg64::result_type>(i); /* non linear */
 
       i++;
 
