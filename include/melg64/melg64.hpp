@@ -116,8 +116,10 @@ class melg_base {
   constexpr void seed(std::span<const melg64::result_type> init_key) {
     assert(!init_key.empty());
 
+    this->initialize_member_state(this->default_seed);
     this->initialize_member_state(init_key);
     this->initialize_member_i();
+    this->initialize_member_next();
   }
 
  private:
@@ -200,8 +202,6 @@ class melg_base {
     const melg64::result_type initial_j = static_cast<melg64::result_type>(0);
 
     const melg64::result_type key_length = (melg64::result_type)init_key.size();
-
-    this->seed(this->default_seed);
 
     melg64::result_type i = initial_i;
     melg64::result_type j = initial_j;
