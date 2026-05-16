@@ -106,12 +106,7 @@ class melg_base {
     return std::numeric_limits<melg64::result_type>::max();
   }
 
-  /**
-   * @warning Placeholder for future implementation
-   */
-  melg64::result_type operator()() {
-    return static_cast<melg64::result_type>(0);
-  }
+  melg64::result_type operator()() { return this->next_(); }
 
   constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
