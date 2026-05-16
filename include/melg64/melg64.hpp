@@ -404,6 +404,9 @@ using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95, 30,
 
 static_assert(std::unsigned_integral<melg64::result_type>);
 
+static_assert(sizeof(melg64::result_type) >= 8,
+              "`result_type` must be at least 64-bit");
+
 static_assert(std::uniform_random_bit_generator<melg64::melg607>);
 static_assert(std::uniform_random_bit_generator<melg64::melg1279>);
 static_assert(std::uniform_random_bit_generator<melg64::melg2281>);
