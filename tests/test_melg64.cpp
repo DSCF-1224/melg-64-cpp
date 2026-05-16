@@ -66,6 +66,22 @@ void PrintBuildInfo() {
 const std::array<melg64::result_type, 4> init_key_a = {0x12345UL, 0x23456UL,
                                                        0x34567UL, 0x45678UL};
 
+bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
+  static constexpr melg64::result_type expected[10] = {
+      12495950309458289112UL, 8163910988915845065UL,  17447112683145787935UL,
+      14392119910362097645UL, 7164909824801924305UL,  17038754296801418064UL,
+      10871240116890307231UL, 12692713980656253045UL, 10435959733805108698UL,
+      5542897018756383954UL};
+
+  melg64::melg607 engine(init_key);
+
+  for (auto e : expected) {
+    if (engine() != e) return false;
+  }
+
+  return true;
+}
+
 int main(void) {
   PrintBuildInfo();
 
