@@ -1,3 +1,7 @@
+#include <array>
+// https://cppreference.com/cpp/header/array
+// https://cpprefjp.github.io/reference/array.html
+
 #include <cstdlib>
 // https://cppreference.com/cpp/header/cstdlib
 // https://cppreference.com/cpp/utility/program/EXIT_status
