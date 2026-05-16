@@ -22,12 +22,12 @@
 // https://cpprefjp.github.io/reference/random.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
-#include <melg64/melg64.hpp>
-// target of this test
-
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
+
+#include <melg64/melg64.hpp>
+// target of this test
 
 #include "build_info.hpp"
 
