@@ -72,8 +72,6 @@ namespace melg64 {
 
 using result_type = std::uint_fast64_t;
 
-static_assert(std::unsigned_integral<melg64::result_type>);
-
 template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
           int __P, std::ptrdiff_t __Lag1, int __Shift1,
           melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
@@ -392,6 +390,8 @@ using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95, 30,
                             0x6fbbee29aaefd91UL, 14, 37>;
 
 }  // namespace melg64
+
+static_assert(std::unsigned_integral<melg64::result_type>);
 
 static_assert(std::uniform_random_bit_generator<melg64::melg607>);
 static_assert(std::uniform_random_bit_generator<melg64::melg1279>);
