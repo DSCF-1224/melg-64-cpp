@@ -59,6 +59,9 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
+const std::array<melg64::result_type, 4> init_key_a = {0x12345UL, 0x23456UL,
+                                                       0x34567UL, 0x45678UL};
+
 int main(void) {
   PrintBuildInfo();
 
