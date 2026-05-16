@@ -81,6 +81,10 @@ class melg_base {
 
   explicit melg_base(const melg64::result_type s) { this->seed(s); }
 
+  explicit melg_base(std::span<const melg64::result_type> init_key) {
+    this->seed(init_key);
+  }
+
   // Requirements
 
   using result_type = melg64::result_type;
