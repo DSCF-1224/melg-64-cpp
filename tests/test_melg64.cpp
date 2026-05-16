@@ -22,6 +22,10 @@
 // https://cpprefjp.github.io/reference/random.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
+#include <span>
+// https://cppreference.com/cpp/header/span
+// https://cpprefjp.github.io/reference/span.html
+
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
