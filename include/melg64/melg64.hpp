@@ -108,6 +108,14 @@ class melg_base {
 
   melg64::result_type operator()() { return this->next_(); }
 
+  // Additions
+
+  friend bool operator==(const melg_base& lhs, const melg_base& rhs) noexcept {
+    return (lhs.i_ == rhs.i_) &&
+           std::equal(lhs.state_, lhs.state_ + __NN, rhs.state_) &&
+           (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
+  }
+
   constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
     this->initialize_member_i();
