@@ -82,6 +82,11 @@ bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   return true;
 }
 
+struct Test {
+  const char* name;
+  bool (*func)();
+};
+
 int main(void) {
   PrintBuildInfo();
 
