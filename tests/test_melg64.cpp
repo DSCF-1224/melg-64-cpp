@@ -90,5 +90,9 @@ struct Test {
 int main(void) {
   PrintBuildInfo();
 
+  const Test tests[] = {{"known_output_melg607(std::array)", []() {
+                           return test_known_output_melg607(init_key_a);
+                         }}};
+
   return EXIT_SUCCESS;
 }
