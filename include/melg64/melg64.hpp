@@ -179,7 +179,7 @@ class melg_base {
   }
 
   constexpr void initialize_member_next() noexcept {
-    this->next_ = &this->next_case1;
+    this->next_ = &melg_base::next_case1;
   }
 
   constexpr void initialize_member_state(const melg64::result_type seed) {
@@ -282,7 +282,7 @@ class melg_base {
     ++this->i_;
 
     if (this->i_ == this->NN - this->MM) {
-      this->next_ = &this->next_case2;
+      this->next_ = &melg_base::next_case2;
     }
 
     return x;
@@ -302,7 +302,7 @@ class melg_base {
     ++this->i_;
 
     if (this->i_ == static_cast<std::size_t>(this->Lag1Over)) {
-      this->next_ = &this->next_case3;
+      this->next_ = &melg_base::next_case3;
     }
 
     return x;
@@ -322,7 +322,7 @@ class melg_base {
     ++this->i_;
 
     if (this->i_ == this->NN - static_cast<std::size_t>(1)) {
-      this->next_ = &this->next_case4;
+      this->next_ = &melg_base::next_case4;
     }
 
     return x;
