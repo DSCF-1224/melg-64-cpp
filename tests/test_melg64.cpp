@@ -78,6 +78,16 @@ const std::array<melg64::result_type, 4> init_key_array =
 const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
                                                        init_key_array.end());
 
+template <std::uniform_random_bit_generator URBG>
+bool test_known_output(URBG& engine,
+                       std::span<const melg64::result_type> expected) {
+  for (auto e : expected) {
+    if (engine() != e) return false;
+  }
+
+  return true;
+}
+
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   static constexpr melg64::result_type expected[10] = {
       12495950309458289112UL, 8163910988915845065UL,  17447112683145787935UL,
@@ -87,11 +97,22 @@ bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
 
   melg64::melg607 engine(init_key);
 
-  for (auto e : expected) {
-    if (engine() != e) return false;
-  }
+  return test_known_output(engine, expected);
+}
 
-  return true;
+bool test_known_output_melg1279(std::span<const melg64::result_type> init_key) {
+  static constexpr melg64::result_type expected[20] = {
+      16235135108973359505UL, 12114426808952376689UL, 17843685570748579801UL,
+      1801320348860028384UL,  650442017251097059UL,   7401930806073658224UL,
+      8544538885320907937UL,  10680173795930056254UL, 7594459215165978320UL,
+      16930061427514290611UL, 6161988295406803453UL,  15301168040311454419UL,
+      1510765571013867513UL,  51246976282527744UL,    1815788032190076904UL,
+      17209382128667908794UL, 1425032498633941855UL,  18317445030881500124UL,
+      14443076587925727999UL, 2993771411211919914UL};
+
+  melg64::melg1279 engine(init_key);
+
+  return test_known_output(engine, expected);
 }
 
 struct Test {
@@ -108,7 +129,13 @@ int main(void) {
       {"known_output_melg607(std::array)",
        []() { return test_known_output_melg607(init_key_array); }},
       {"known_output_melg607(std::vector)",
-       []() { return test_known_output_melg607(init_key_vector); }}};
+       []() { return test_known_output_melg607(init_key_vector); }},
+      {"known_output_melg1279(raw array)",
+       []() { return test_known_output_melg1279(init_key_raw); }},
+      {"known_output_melg1279(std::array)",
+       []() { return test_known_output_melg1279(init_key_array); }},
+      {"known_output_melg1279(std::vector)",
+       []() { return test_known_output_melg1279(init_key_vector); }}};
 
   int count_failed = 0;
 
