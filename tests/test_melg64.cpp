@@ -75,6 +75,9 @@ const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
 const std::array<melg64::result_type, 4> init_key_array =
     std::to_array(init_key_raw);
 
+const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
+                                                       init_key_array.end());
+
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   static constexpr melg64::result_type expected[10] = {
       12495950309458289112UL, 8163910988915845065UL,  17447112683145787935UL,
