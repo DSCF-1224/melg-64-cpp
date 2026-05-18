@@ -94,5 +94,13 @@ int main(void) {
                            return test_known_output_melg607(init_key_a);
                          }}};
 
-  return EXIT_SUCCESS;
+  int count_failed = 0;
+
+  for (const auto& test : tests) {
+    const bool result = test.func();
+    std::cout << (result ? "PASS" : "FAIL") << ": " << test.name << std::endl;
+    if (!result) count_failed++;
+  }
+
+  return count_failed;
 }
