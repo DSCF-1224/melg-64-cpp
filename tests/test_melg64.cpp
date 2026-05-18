@@ -95,9 +95,11 @@ struct Test {
 int main(void) {
   PrintBuildInfo();
 
-  const Test tests[] = {{"known_output_melg607(std::array)", []() {
-                           return test_known_output_melg607(init_key_array);
-                         }}};
+  const Test tests[] = {
+      {"known_output_melg607(raw array)",
+       []() { return test_known_output_melg607(init_key_raw); }},
+      {"known_output_melg607(std::array)",
+       []() { return test_known_output_melg607(init_key_array); }}};
 
   int count_failed = 0;
 
