@@ -81,6 +81,8 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
+/* test: known output */
+
 const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
                                              0x45678UL};
 
@@ -183,6 +185,15 @@ bool test_known_output_melg44497(
   return test_known_output(engine, "melg44497-64.out");
 }
 
+/* test: default constructor */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_default_constructor() {
+  URBG a;
+  URBG b(URBG::default_seed);
+  return (a == b);
+}
+
 struct Test {
   const char* name;
   bool (*func)();
@@ -233,7 +244,21 @@ int main(void) {
       {"known_output_melg44497(std::array)",
        []() { return test_known_output_melg44497(init_key_array); }},
       {"known_output_melg44497(std::vector)",
-       []() { return test_known_output_melg44497(init_key_vector); }}};
+       []() { return test_known_output_melg44497(init_key_vector); }},
+      {"default_constructor_melg607",
+       []() { return test_default_constructor<melg64::melg607>(); }},
+      {"default_constructor_melg1279",
+       []() { return test_default_constructor<melg64::melg1279>(); }},
+      {"default_constructor_melg2281",
+       []() { return test_default_constructor<melg64::melg2281>(); }},
+      {"default_constructor_melg4253",
+       []() { return test_default_constructor<melg64::melg4253>(); }},
+      {"default_constructor_melg11213",
+       []() { return test_default_constructor<melg64::melg11213>(); }},
+      {"default_constructor_melg19937",
+       []() { return test_default_constructor<melg64::melg19937>(); }},
+      {"default_constructor_melg44497",
+       []() { return test_default_constructor<melg64::melg44497>(); }}};
 
   int count_failed = 0;
 
