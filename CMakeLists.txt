@@ -24,5 +24,10 @@ if(MELG64_BUILD_TESTS)
     target_include_directories(test_melg64 PRIVATE
         ${CMAKE_CURRENT_BINARY_DIR}/tests
     )
-    add_test(NAME test_melg64 COMMAND test_melg64)
+
+    add_test(
+        NAME test_melg64
+        COMMAND test_melg64
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
 endif()
