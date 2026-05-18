@@ -97,16 +97,23 @@ bool test_known_output(URBG& engine,
 }
 
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
-  static constexpr melg64::result_type expected[10] = {
-      12495950309458289112UL, 8163910988915845065UL,  17447112683145787935UL,
-      14392119910362097645UL, 7164909824801924305UL,  17038754296801418064UL,
-      10871240116890307231UL, 12692713980656253045UL, 10435959733805108698UL,
-      5542897018756383954UL};
+  std::vector<melg64::result_type> expected;
 
   std::ifstream ifs("tests/melg607-64.out");
 
   if (!ifs.is_open()) {
     throw std::runtime_error("failed to open melg607-64.out");
+  }
+
+  melg64::result_type receiver;
+
+  std::string header;
+
+  std::getline(ifs, header);
+
+  while (ifs >> receiver) {
+    expected.push_back(receiver);
+    if (expected.size() == 1000) break;
   }
 
   melg64::melg607 engine(init_key);
