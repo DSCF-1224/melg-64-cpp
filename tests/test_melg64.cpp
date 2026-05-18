@@ -81,6 +81,8 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
+/* test: known output */
+
 const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
                                              0x45678UL};
 
@@ -181,6 +183,15 @@ bool test_known_output_melg44497(
   melg64::melg44497 engine(init_key);
 
   return test_known_output(engine, "melg44497-64.out");
+}
+
+/* test: default constructor */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_default_constructor() {
+  URBG a;
+  URBG b(URBG::default_seed);
+  return (a == b);
 }
 
 struct Test {
