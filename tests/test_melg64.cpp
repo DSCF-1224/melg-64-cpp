@@ -194,6 +194,32 @@ bool test_default_constructor() {
   return (&a != &b) && (a == b);
 }
 
+/* test: reset by `seed()` */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_seed_reset() {
+  std::random_device seed_source;
+
+  const melg64::result_type s = static_cast<melg64::result_type>(seed_source());
+
+  URBG a(s), b(s);
+
+  if (&a == &b) return false;
+
+  for (size_t i = 0; i < 100; i++) {
+    a();
+  }
+
+  if (a == b) {
+    std::cout << "s: " << s << std::endl;
+    return false;
+  }
+
+  a.seed(s);
+
+  return (a == b);
+}
+
 struct Test {
   const char* name;
   bool (*func)();
