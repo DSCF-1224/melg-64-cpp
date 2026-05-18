@@ -32,6 +32,10 @@
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
 
+#include <vector>
+// https://cppreference.com/cpp/header/vector
+// https://cpprefjp.github.io/reference/vector.html
+
 #include <melg64/melg64.hpp>
 // target of this test
 
