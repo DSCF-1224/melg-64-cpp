@@ -78,6 +78,16 @@ const std::array<melg64::result_type, 4> init_key_array =
 const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
                                                        init_key_array.end());
 
+template <std::uniform_random_bit_generator URBG>
+bool test_known_output(URBG& engine,
+                       std::span<const melg64::result_type> expected) {
+  for (auto e : expected) {
+    if (engine() != e) return false;
+  }
+
+  return true;
+}
+
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   static constexpr melg64::result_type expected[10] = {
       12495950309458289112UL, 8163910988915845065UL,  17447112683145787935UL,
@@ -87,11 +97,7 @@ bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
 
   melg64::melg607 engine(init_key);
 
-  for (auto e : expected) {
-    if (engine() != e) return false;
-  }
-
-  return true;
+  return test_known_output(engine, expected);
 }
 
 struct Test {
