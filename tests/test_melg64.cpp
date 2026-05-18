@@ -32,6 +32,10 @@
 // https://cppreference.com/cpp/header/span
 // https://cpprefjp.github.io/reference/span.html
 
+#include <stdexcept>
+// https://cppreference.com/cpp/header/stdexcept
+// https://cpprefjp.github.io/reference/stdexcept.html
+
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
