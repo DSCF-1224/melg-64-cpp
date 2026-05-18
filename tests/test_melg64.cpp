@@ -244,7 +244,9 @@ int main(void) {
       {"known_output_melg44497(std::array)",
        []() { return test_known_output_melg44497(init_key_array); }},
       {"known_output_melg44497(std::vector)",
-       []() { return test_known_output_melg44497(init_key_vector); }}};
+       []() { return test_known_output_melg44497(init_key_vector); }},
+      {"default_constructor_melg607",
+       []() { return test_default_constructor<melg64::melg607>(); }}};
 
   int count_failed = 0;
 
