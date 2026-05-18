@@ -1,6 +1,8 @@
 #include <array>
 // https://cppreference.com/cpp/header/array
+// https://cppreference.com/cpp/container/array/to_array
 // https://cpprefjp.github.io/reference/array.html
+// https://cpprefjp.github.io/reference/array/to_array.html
 
 #include <cstdlib>
 // https://cppreference.com/cpp/header/cstdlib
@@ -29,6 +31,10 @@
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
+
+#include <vector>
+// https://cppreference.com/cpp/header/vector
+// https://cpprefjp.github.io/reference/vector.html
 
 #include <melg64/melg64.hpp>
 // target of this test
@@ -63,8 +69,14 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
-const std::array<melg64::result_type, 4> init_key_a = {0x12345UL, 0x23456UL,
-                                                       0x34567UL, 0x45678UL};
+const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
+                                             0x45678UL};
+
+const std::array<melg64::result_type, 4> init_key_array =
+    std::to_array(init_key_raw);
+
+const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
+                                                       init_key_array.end());
 
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   static constexpr melg64::result_type expected[10] = {
@@ -82,8 +94,29 @@ bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   return true;
 }
 
+struct Test {
+  const char* name;
+  bool (*func)();
+};
+
 int main(void) {
   PrintBuildInfo();
 
-  return EXIT_SUCCESS;
+  const Test tests[] = {
+      {"known_output_melg607(raw array)",
+       []() { return test_known_output_melg607(init_key_raw); }},
+      {"known_output_melg607(std::array)",
+       []() { return test_known_output_melg607(init_key_array); }},
+      {"known_output_melg607(std::vector)",
+       []() { return test_known_output_melg607(init_key_vector); }}};
+
+  int count_failed = 0;
+
+  for (const auto& test : tests) {
+    const bool result = test.func();
+    std::cout << (result ? "PASS" : "FAIL") << ": " << test.name << std::endl;
+    if (!result) count_failed++;
+  }
+
+  return count_failed;
 }
