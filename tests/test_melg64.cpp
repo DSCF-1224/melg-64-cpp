@@ -191,7 +191,7 @@ template <std::uniform_random_bit_generator URBG>
 bool test_default_constructor() {
   URBG a;
   URBG b(URBG::default_seed);
-  return (a == b);
+  return (&a != &b) && (a == b);
 }
 
 struct Test {
