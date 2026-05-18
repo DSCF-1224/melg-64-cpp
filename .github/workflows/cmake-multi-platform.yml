@@ -45,6 +45,10 @@ jobs:
     steps:
     - uses: actions/checkout@v6
 
+    - name: Download reference output
+      run: |
+        curl -o tests/melg607-64.out https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg607-64/melg607-64.out || exit 1 
+
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
       id: strings
