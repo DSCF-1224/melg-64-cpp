@@ -130,6 +130,12 @@ bool test_known_output_melg1279(std::span<const melg64::result_type> init_key) {
   return test_known_output(engine, "melg1279-64.out");
 }
 
+bool test_known_output_melg2281(std::span<const melg64::result_type> init_key) {
+  melg64::melg2281 engine(init_key);
+
+  return test_known_output(engine, "melg2281-64.out");
+}
+
 struct Test {
   const char* name;
   bool (*func)();
@@ -150,7 +156,13 @@ int main(void) {
       {"known_output_melg1279(std::array)",
        []() { return test_known_output_melg1279(init_key_array); }},
       {"known_output_melg1279(std::vector)",
-       []() { return test_known_output_melg1279(init_key_vector); }}};
+       []() { return test_known_output_melg1279(init_key_vector); }},
+      {"known_output_melg2281(raw array)",
+       []() { return test_known_output_melg2281(init_key_raw); }},
+      {"known_output_melg2281(std::array)",
+       []() { return test_known_output_melg2281(init_key_array); }},
+      {"known_output_melg2281(std::vector)",
+       []() { return test_known_output_melg2281(init_key_vector); }}};
 
   int count_failed = 0;
 
