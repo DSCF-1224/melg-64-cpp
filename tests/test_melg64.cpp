@@ -250,7 +250,9 @@ int main(void) {
       {"default_constructor_melg1279",
        []() { return test_default_constructor<melg64::melg1279>(); }},
       {"default_constructor_melg2281",
-       []() { return test_default_constructor<melg64::melg2281>(); }}};
+       []() { return test_default_constructor<melg64::melg2281>(); }},
+      {"default_constructor_melg4253",
+       []() { return test_default_constructor<melg64::melg4253>(); }}};
 
   int count_failed = 0;
 
