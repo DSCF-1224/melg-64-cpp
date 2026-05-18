@@ -103,6 +103,12 @@ bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
       10871240116890307231UL, 12692713980656253045UL, 10435959733805108698UL,
       5542897018756383954UL};
 
+  std::ifstream ifs("tests/melg607-64.out");
+
+  if (!ifs.is_open()) {
+    throw std::runtime_error("failed to open melg607-64.out");
+  }
+
   melg64::melg607 engine(init_key);
 
   return test_known_output(engine, expected);
