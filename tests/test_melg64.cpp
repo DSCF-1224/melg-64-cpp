@@ -36,6 +36,10 @@
 // https://cppreference.com/cpp/header/stdexcept
 // https://cpprefjp.github.io/reference/stdexcept.html
 
+#include <string>
+// https://cppreference.com/cpp/header/string
+// https://cpprefjp.github.io/reference/string.html
+
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
@@ -109,7 +113,7 @@ bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
 
   std::string header;
 
-  std::getline(ifs, header);
+  std::getline(ifs, header);  // skip header
 
   while (ifs >> receiver) {
     expected.push_back(receiver);
