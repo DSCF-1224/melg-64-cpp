@@ -290,7 +290,8 @@ int main(void) {
       {"seed_reset_melg2281", test_seed_reset<melg64::melg2281>},
       {"seed_reset_melg4253", test_seed_reset<melg64::melg4253>},
       {"seed_reset_melg11213", test_seed_reset<melg64::melg11213>},
-      {"seed_reset_melg19937", test_seed_reset<melg64::melg19937>}};
+      {"seed_reset_melg19937", test_seed_reset<melg64::melg19937>},
+      {"seed_reset_melg44497", test_seed_reset<melg64::melg44497>}};
 
   int count_failed = 0;
 
