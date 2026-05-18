@@ -98,6 +98,10 @@ bool test_known_output(URBG& engine, const char* file) {
     throw std::runtime_error(std::string("failed to open ") + file);
   }
 
+  constexpr std::size_t sample_size = 1000;
+
+  static_assert(sample_size > 0);
+
   melg64::result_type receiver;
 
   std::vector<melg64::result_type> expected;
@@ -108,14 +112,30 @@ bool test_known_output(URBG& engine, const char* file) {
 
   while (ifs >> receiver) {
     expected.push_back(receiver);
-    if (expected.size() == 1000) break;
+    if (expected.size() == sample_size) break;
   }
 
-  for (auto e : expected) {
-    if (engine() != e) return false;
+  if (expected.size() < sample_size) {
+    throw std::runtime_error(std::string("insufficient data in ") + file);
   }
 
-  return true;
+  bool succeeded;
+
+  for (std::size_t i = 0; i < sample_size; i++) {
+    const melg64::result_type harvest = engine();
+
+    succeeded = (harvest == expected[i]);
+
+    if (!succeeded) {
+      std::cout << "  index    : " << i << std::endl
+                << "  expected : " << expected[i] << std::endl
+                << "  harvest  : " << harvest << std::endl;
+
+      return succeeded;
+    }
+  }
+
+  return succeeded;
 }
 
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
