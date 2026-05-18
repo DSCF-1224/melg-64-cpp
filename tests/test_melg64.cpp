@@ -194,6 +194,32 @@ bool test_default_constructor() {
   return (&a != &b) && (a == b);
 }
 
+/* test: reset by `seed()` */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_seed_reset() {
+  std::random_device seed_source;
+
+  const melg64::result_type s = static_cast<melg64::result_type>(seed_source());
+
+  URBG a(s), b(s);
+
+  if (&a == &b) return false;
+
+  for (size_t i = 0; i < 100; i++) {
+    a();
+  }
+
+  if (a == b) {
+    std::cout << "s: " << s << std::endl;
+    return false;
+  }
+
+  a.seed(s);
+
+  return (a == b);
+}
+
 struct Test {
   const char* name;
   bool (*func)();
@@ -258,7 +284,14 @@ int main(void) {
       {"default_constructor_melg19937",
        []() { return test_default_constructor<melg64::melg19937>(); }},
       {"default_constructor_melg44497",
-       []() { return test_default_constructor<melg64::melg44497>(); }}};
+       []() { return test_default_constructor<melg64::melg44497>(); }},
+      {"seed_reset_melg607", test_seed_reset<melg64::melg607>},
+      {"seed_reset_melg1279", test_seed_reset<melg64::melg1279>},
+      {"seed_reset_melg2281", test_seed_reset<melg64::melg2281>},
+      {"seed_reset_melg4253", test_seed_reset<melg64::melg4253>},
+      {"seed_reset_melg11213", test_seed_reset<melg64::melg11213>},
+      {"seed_reset_melg19937", test_seed_reset<melg64::melg19937>},
+      {"seed_reset_melg44497", test_seed_reset<melg64::melg44497>}};
 
   int count_failed = 0;
 
