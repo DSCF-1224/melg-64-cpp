@@ -1,6 +1,8 @@
 #include <array>
 // https://cppreference.com/cpp/header/array
+// https://cppreference.com/cpp/container/array/to_array
 // https://cpprefjp.github.io/reference/array.html
+// https://cpprefjp.github.io/reference/array/to_array.html
 
 #include <cstdlib>
 // https://cppreference.com/cpp/header/cstdlib
@@ -63,8 +65,11 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
-const std::array<melg64::result_type, 4> init_key_a = {0x12345UL, 0x23456UL,
-                                                       0x34567UL, 0x45678UL};
+const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
+                                             0x45678UL};
+
+const std::array<melg64::result_type, 4> init_key_array =
+    std::to_array(init_key_raw);
 
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
   static constexpr melg64::result_type expected[10] = {
@@ -91,7 +96,7 @@ int main(void) {
   PrintBuildInfo();
 
   const Test tests[] = {{"known_output_melg607(std::array)", []() {
-                           return test_known_output_melg607(init_key_a);
+                           return test_known_output_melg607(init_key_array);
                          }}};
 
   int count_failed = 0;
