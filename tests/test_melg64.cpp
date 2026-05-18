@@ -10,6 +10,10 @@
 // https://cpprefjp.github.io/reference/cstdlib.html
 // https://cpprefjp.github.io/reference/cstdlib/exit_success.html
 
+#include <fstream>
+// https://cppreference.com/cpp/header/fstream
+// https://cpprefjp.github.io/reference/fstream.html
+
 #include <iostream>
 // https://cppreference.com/cpp/header/iostream
 // https://cppreference.com/cpp/io/cout
