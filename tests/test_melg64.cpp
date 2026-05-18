@@ -106,7 +106,9 @@ int main(void) {
       {"known_output_melg607(raw array)",
        []() { return test_known_output_melg607(init_key_raw); }},
       {"known_output_melg607(std::array)",
-       []() { return test_known_output_melg607(init_key_array); }}};
+       []() { return test_known_output_melg607(init_key_array); }},
+      {"known_output_melg607(std::vector)",
+       []() { return test_known_output_melg607(init_key_vector); }}};
 
   int count_failed = 0;
 
