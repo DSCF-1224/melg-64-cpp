@@ -93,7 +93,8 @@ const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
                                                        init_key_array.end());
 
 template <std::uniform_random_bit_generator URBG>
-bool test_known_output(URBG& engine, const char* file) {
+bool test_known_output(std::span<const melg64::result_type> init_key,
+                       const char* file) {
   std::ifstream ifs(std::string("tests/") + file);
 
   if (!ifs.is_open()) {
@@ -123,6 +124,8 @@ bool test_known_output(URBG& engine, const char* file) {
 
   bool succeeded;
 
+  URBG engine(init_key);
+
   for (std::size_t i = 0; i < sample_size; i++) {
     const melg64::result_type harvest = engine();
 
@@ -141,48 +144,34 @@ bool test_known_output(URBG& engine, const char* file) {
 }
 
 bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
-  melg64::melg607 engine(init_key);
-
-  return test_known_output(engine, "melg607-64.out");
+  return test_known_output<melg64::melg607>(init_key, "melg607-64.out");
 }
 
 bool test_known_output_melg1279(std::span<const melg64::result_type> init_key) {
-  melg64::melg1279 engine(init_key);
-
-  return test_known_output(engine, "melg1279-64.out");
+  return test_known_output<melg64::melg1279>(init_key, "melg1279-64.out");
 }
 
 bool test_known_output_melg2281(std::span<const melg64::result_type> init_key) {
-  melg64::melg2281 engine(init_key);
-
-  return test_known_output(engine, "melg2281-64.out");
+  return test_known_output<melg64::melg2281>(init_key, "melg2281-64.out");
 }
 
 bool test_known_output_melg4253(std::span<const melg64::result_type> init_key) {
-  melg64::melg4253 engine(init_key);
-
-  return test_known_output(engine, "melg4253-64.out");
+  return test_known_output<melg64::melg4253>(init_key, "melg4253-64.out");
 }
 
 bool test_known_output_melg11213(
     std::span<const melg64::result_type> init_key) {
-  melg64::melg11213 engine(init_key);
-
-  return test_known_output(engine, "melg11213-64.out");
+  return test_known_output<melg64::melg11213>(init_key, "melg11213-64.out");
 }
 
 bool test_known_output_melg19937(
     std::span<const melg64::result_type> init_key) {
-  melg64::melg19937 engine(init_key);
-
-  return test_known_output(engine, "melg19937-64.out");
+  return test_known_output<melg64::melg19937>(init_key, "melg19937-64.out");
 }
 
 bool test_known_output_melg44497(
     std::span<const melg64::result_type> init_key) {
-  melg64::melg44497 engine(init_key);
-
-  return test_known_output(engine, "melg44497-64.out");
+  return test_known_output<melg64::melg44497>(init_key, "melg44497-64.out");
 }
 
 /* test: default constructor */
