@@ -143,35 +143,29 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
   return succeeded;
 }
 
-bool test_known_output_melg607(std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg607>(init_key, "melg607-64.out");
-}
+template <std::uniform_random_bit_generator URBG>
+bool test_known_output(std::span<const melg64::result_type> init_key) {
+  const char* file = nullptr;
 
-bool test_known_output_melg1279(std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg1279>(init_key, "melg1279-64.out");
-}
+  if constexpr (std::is_same_v<URBG, melg64::melg607>) {
+    file = "melg607-64.out";
+  } else if constexpr (std::is_same_v<URBG, melg64::melg1279>) {
+    file = "melg1279-64.out";
+  } else if constexpr (std::is_same_v<URBG, melg64::melg2281>) {
+    file = "melg2281-64.out";
+  } else if constexpr (std::is_same_v<URBG, melg64::melg4253>) {
+    file = "melg4253-64.out";
+  } else if constexpr (std::is_same_v<URBG, melg64::melg11213>) {
+    file = "melg11213-64.out";
+  } else if constexpr (std::is_same_v<URBG, melg64::melg19937>) {
+    file = "melg19937-64.out";
+  } else if constexpr (std::is_same_v<URBG, melg64::melg44497>) {
+    file = "melg44497-64.out";
+  } else {
+    static_assert(false, "unsupported melg64 type");
+  }
 
-bool test_known_output_melg2281(std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg2281>(init_key, "melg2281-64.out");
-}
-
-bool test_known_output_melg4253(std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg4253>(init_key, "melg4253-64.out");
-}
-
-bool test_known_output_melg11213(
-    std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg11213>(init_key, "melg11213-64.out");
-}
-
-bool test_known_output_melg19937(
-    std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg19937>(init_key, "melg19937-64.out");
-}
-
-bool test_known_output_melg44497(
-    std::span<const melg64::result_type> init_key) {
-  return test_known_output<melg64::melg44497>(init_key, "melg44497-64.out");
+  return test_known_output<URBG>(init_key, file);
 }
 
 /* test: default constructor */
@@ -219,47 +213,47 @@ int main(void) {
 
   const Test tests[] = {
       {"known_output_melg607(raw array)",
-       []() { return test_known_output_melg607(init_key_raw); }},
+       []() { return test_known_output<melg64::melg607>(init_key_raw); }},
       {"known_output_melg607(std::array)",
-       []() { return test_known_output_melg607(init_key_array); }},
+       []() { return test_known_output<melg64::melg607>(init_key_array); }},
       {"known_output_melg607(std::vector)",
-       []() { return test_known_output_melg607(init_key_vector); }},
+       []() { return test_known_output<melg64::melg607>(init_key_vector); }},
       {"known_output_melg1279(raw array)",
-       []() { return test_known_output_melg1279(init_key_raw); }},
+       []() { return test_known_output<melg64::melg1279>(init_key_raw); }},
       {"known_output_melg1279(std::array)",
-       []() { return test_known_output_melg1279(init_key_array); }},
+       []() { return test_known_output<melg64::melg1279>(init_key_array); }},
       {"known_output_melg1279(std::vector)",
-       []() { return test_known_output_melg1279(init_key_vector); }},
+       []() { return test_known_output<melg64::melg1279>(init_key_vector); }},
       {"known_output_melg2281(raw array)",
-       []() { return test_known_output_melg2281(init_key_raw); }},
+       []() { return test_known_output<melg64::melg2281>(init_key_raw); }},
       {"known_output_melg2281(std::array)",
-       []() { return test_known_output_melg2281(init_key_array); }},
+       []() { return test_known_output<melg64::melg2281>(init_key_array); }},
       {"known_output_melg2281(std::vector)",
-       []() { return test_known_output_melg2281(init_key_vector); }},
+       []() { return test_known_output<melg64::melg2281>(init_key_vector); }},
       {"known_output_melg4253(raw array)",
-       []() { return test_known_output_melg4253(init_key_raw); }},
+       []() { return test_known_output<melg64::melg4253>(init_key_raw); }},
       {"known_output_melg4253(std::array)",
-       []() { return test_known_output_melg4253(init_key_array); }},
+       []() { return test_known_output<melg64::melg4253>(init_key_array); }},
       {"known_output_melg4253(std::vector)",
-       []() { return test_known_output_melg4253(init_key_vector); }},
+       []() { return test_known_output<melg64::melg4253>(init_key_vector); }},
       {"known_output_melg11213(raw array)",
-       []() { return test_known_output_melg11213(init_key_raw); }},
+       []() { return test_known_output<melg64::melg11213>(init_key_raw); }},
       {"known_output_melg11213(std::array)",
-       []() { return test_known_output_melg11213(init_key_array); }},
+       []() { return test_known_output<melg64::melg11213>(init_key_array); }},
       {"known_output_melg11213(std::vector)",
-       []() { return test_known_output_melg11213(init_key_vector); }},
+       []() { return test_known_output<melg64::melg11213>(init_key_vector); }},
       {"known_output_melg19937(raw array)",
-       []() { return test_known_output_melg19937(init_key_raw); }},
+       []() { return test_known_output<melg64::melg19937>(init_key_raw); }},
       {"known_output_melg19937(std::array)",
-       []() { return test_known_output_melg19937(init_key_array); }},
+       []() { return test_known_output<melg64::melg19937>(init_key_array); }},
       {"known_output_melg19937(std::vector)",
-       []() { return test_known_output_melg19937(init_key_vector); }},
+       []() { return test_known_output<melg64::melg19937>(init_key_vector); }},
       {"known_output_melg44497(raw array)",
-       []() { return test_known_output_melg44497(init_key_raw); }},
+       []() { return test_known_output<melg64::melg44497>(init_key_raw); }},
       {"known_output_melg44497(std::array)",
-       []() { return test_known_output_melg44497(init_key_array); }},
+       []() { return test_known_output<melg64::melg44497>(init_key_array); }},
       {"known_output_melg44497(std::vector)",
-       []() { return test_known_output_melg44497(init_key_vector); }},
+       []() { return test_known_output<melg64::melg44497>(init_key_vector); }},
       {"default_constructor_melg607",
        test_default_constructor<melg64::melg607>},
       {"default_constructor_melg1279",
