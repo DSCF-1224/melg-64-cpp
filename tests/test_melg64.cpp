@@ -274,7 +274,7 @@ int main(void) {
       {"default_constructor_melg607",
        test_default_constructor<melg64::melg607>},
       {"default_constructor_melg1279",
-       []() { return test_default_constructor<melg64::melg1279>(); }},
+       test_default_constructor<melg64::melg1279>},
       {"default_constructor_melg2281",
        []() { return test_default_constructor<melg64::melg2281>(); }},
       {"default_constructor_melg4253",
