@@ -218,6 +218,23 @@ bool test_seed_reset() {
   return (a == b);
 }
 
+template <std::uniform_random_bit_generator URBG>
+bool test_seed_reset(std::span<const melg64::result_type> init_key) {
+  URBG a(init_key), b(init_key);
+
+  if (&a == &b) return false;
+
+  for (size_t i = 0; i < 100; i++) {
+    a();
+  }
+
+  if (a == b) return false;
+
+  a.seed(init_key);
+
+  return (a == b);
+}
+
 struct Test {
   const char* name;
   bool (*func)();
