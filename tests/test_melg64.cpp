@@ -235,6 +235,11 @@ bool test_seed_reset(std::span<const melg64::result_type> init_key) {
   return (a == b);
 }
 
+template <std::uniform_random_bit_generator URBG>
+bool test_seed_reset_raw() {
+  return test_seed_reset<URBG>(init_key_raw);
+}
+
 struct Test {
   const char* name;
   bool (*func)();
@@ -301,12 +306,22 @@ int main(void) {
       {"default_constructor_melg44497",
        test_default_constructor<melg64::melg44497>},
       {"seed_reset_melg607", test_seed_reset<melg64::melg607>},
+      {"seed_reset_melg607(raw array)", test_seed_reset_raw<melg64::melg607>},
       {"seed_reset_melg1279", test_seed_reset<melg64::melg1279>},
+      {"seed_reset_melg1279(raw array)", test_seed_reset_raw<melg64::melg1279>},
       {"seed_reset_melg2281", test_seed_reset<melg64::melg2281>},
+      {"seed_reset_melg2281(raw array)", test_seed_reset_raw<melg64::melg2281>},
       {"seed_reset_melg4253", test_seed_reset<melg64::melg4253>},
+      {"seed_reset_melg4253(raw array)", test_seed_reset_raw<melg64::melg4253>},
       {"seed_reset_melg11213", test_seed_reset<melg64::melg11213>},
+      {"seed_reset_melg11213(raw array)",
+       test_seed_reset_raw<melg64::melg11213>},
       {"seed_reset_melg19937", test_seed_reset<melg64::melg19937>},
-      {"seed_reset_melg44497", test_seed_reset<melg64::melg44497>}};
+      {"seed_reset_melg19937(raw array)",
+       test_seed_reset_raw<melg64::melg19937>},
+      {"seed_reset_melg44497", test_seed_reset<melg64::melg44497>},
+      {"seed_reset_melg44497(raw array)",
+       test_seed_reset_raw<melg64::melg44497>}};
 
   int count_failed = 0;
 
