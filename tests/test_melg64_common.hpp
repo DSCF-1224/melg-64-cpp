@@ -258,4 +258,30 @@ struct Test {
   bool (*func)();
 };
 
+/* test function for each variant */
+template <std::uniform_random_bit_generator URBG>
+int test_runner() {
+  PrintBuildInfo();
+
+  const Test tests[] = {
+      {"known output (raw array)", test_known_output_raw<URBG>},
+      {"known output (std::array)", test_known_output_array<URBG>},
+      {"known output (std::vector)", test_known_output_vector<URBG>},
+      {"default constructor", test_default_constructor<URBG>},
+      {"seed reset", test_seed_reset<URBG>},
+      {"seed reset (raw array)", test_seed_reset_raw<URBG>},
+      {"seed reset (std::array)", test_seed_reset_array<URBG>},
+      {"seed reset (std::vector)", test_seed_reset_vector<URBG>}};
+
+  int count_failed = 0;
+
+  for (const auto& test : tests) {
+    const bool result = test.func();
+    std::cout << (result ? "PASS" : "FAIL") << ": " << test.name << std::endl;
+    if (!result) count_failed++;
+  }
+
+  return count_failed;
+}
+
 #endif /* TEST_MELG64_COMMON_H_ */
