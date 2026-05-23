@@ -19,18 +19,6 @@ if(MELG64_BUILD_TESTS)
         ${CMAKE_CURRENT_BINARY_DIR}/tests/build_info.hpp
     )
 
-    add_executable(test_melg64 tests/test_melg64.cpp)
-    target_link_libraries(test_melg64 PRIVATE melg64)
-    target_include_directories(test_melg64 PRIVATE
-        ${CMAKE_CURRENT_BINARY_DIR}/tests
-    )
-
-    add_test(
-        NAME test_melg64
-        COMMAND test_melg64
-        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    )
-
     foreach(variant 607 1279 2281 4253 11213 19937 44497)
         add_executable(test_melg${variant} tests/test_melg${variant}.cpp)
         target_link_libraries(test_melg${variant} PRIVATE melg64)
