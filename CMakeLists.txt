@@ -31,7 +31,7 @@ if(MELG64_BUILD_TESTS)
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     )
 
-    foreach(variant 607 1279)
+    foreach(variant 607 1279 2281)
         add_executable(test_melg${variant} tests/test_melg${variant}.cpp)
         target_link_libraries(test_melg${variant} PRIVATE melg64)
         target_include_directories(test_melg${variant} PRIVATE
