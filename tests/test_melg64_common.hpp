@@ -1,3 +1,6 @@
+#ifndef TEST_MELG64_COMMON_H_
+#define TEST_MELG64_COMMON_H_
+
 #include <array>
 // https://cppreference.com/cpp/header/array
 // https://cppreference.com/cpp/container/array/to_array
@@ -255,111 +258,20 @@ struct Test {
   bool (*func)();
 };
 
-int main(void) {
+/* test function for each variant */
+template <std::uniform_random_bit_generator URBG>
+int test_runner() {
   PrintBuildInfo();
 
   const Test tests[] = {
-      {"known_output_melg607(raw array)",
-       test_known_output_raw<melg64::melg607>},
-      {"known_output_melg607(std::array)",
-       test_known_output_array<melg64::melg607>},
-      {"known_output_melg607(std::vector)",
-       test_known_output_vector<melg64::melg607>},
-      {"known_output_melg1279(raw array)",
-       test_known_output_raw<melg64::melg1279>},
-      {"known_output_melg1279(std::array)",
-       test_known_output_array<melg64::melg1279>},
-      {"known_output_melg1279(std::vector)",
-       test_known_output_vector<melg64::melg1279>},
-      {"known_output_melg2281(raw array)",
-       test_known_output_raw<melg64::melg2281>},
-      {"known_output_melg2281(std::array)",
-       test_known_output_array<melg64::melg2281>},
-      {"known_output_melg2281(std::vector)",
-       test_known_output_vector<melg64::melg2281>},
-      {"known_output_melg4253(raw array)",
-       test_known_output_raw<melg64::melg4253>},
-      {"known_output_melg4253(std::array)",
-       test_known_output_array<melg64::melg4253>},
-      {"known_output_melg4253(std::vector)",
-       test_known_output_vector<melg64::melg4253>},
-      {"known_output_melg11213(raw array)",
-       test_known_output_raw<melg64::melg11213>},
-      {"known_output_melg11213(std::array)",
-       test_known_output_array<melg64::melg11213>},
-      {"known_output_melg11213(std::vector)",
-       test_known_output_vector<melg64::melg11213>},
-      {"known_output_melg19937(raw array)",
-       test_known_output_raw<melg64::melg19937>},
-      {"known_output_melg19937(std::array)",
-       test_known_output_array<melg64::melg19937>},
-      {"known_output_melg19937(std::vector)",
-       test_known_output_vector<melg64::melg19937>},
-      {"known_output_melg44497(raw array)",
-       test_known_output_raw<melg64::melg44497>},
-      {"known_output_melg44497(std::array)",
-       test_known_output_array<melg64::melg44497>},
-      {"known_output_melg44497(std::vector)",
-       test_known_output_vector<melg64::melg44497>},
-      {"default_constructor_melg607",
-       test_default_constructor<melg64::melg607>},
-      {"default_constructor_melg1279",
-       test_default_constructor<melg64::melg1279>},
-      {"default_constructor_melg2281",
-       test_default_constructor<melg64::melg2281>},
-      {"default_constructor_melg4253",
-       test_default_constructor<melg64::melg4253>},
-      {"default_constructor_melg11213",
-       test_default_constructor<melg64::melg11213>},
-      {"default_constructor_melg19937",
-       test_default_constructor<melg64::melg19937>},
-      {"default_constructor_melg44497",
-       test_default_constructor<melg64::melg44497>},
-      {"seed_reset_melg607", test_seed_reset<melg64::melg607>},
-      {"seed_reset_melg607(raw array)", test_seed_reset_raw<melg64::melg607>},
-      {"seed_reset_melg607(std::array)",
-       test_seed_reset_array<melg64::melg607>},
-      {"seed_reset_melg607(std::vector)",
-       test_seed_reset_vector<melg64::melg607>},
-      {"seed_reset_melg1279", test_seed_reset<melg64::melg1279>},
-      {"seed_reset_melg1279(raw array)", test_seed_reset_raw<melg64::melg1279>},
-      {"seed_reset_melg1279(std::array)",
-       test_seed_reset_array<melg64::melg1279>},
-      {"seed_reset_melg1279(std::vector)",
-       test_seed_reset_vector<melg64::melg1279>},
-      {"seed_reset_melg2281", test_seed_reset<melg64::melg2281>},
-      {"seed_reset_melg2281(raw array)", test_seed_reset_raw<melg64::melg2281>},
-      {"seed_reset_melg2281(std::array)",
-       test_seed_reset_array<melg64::melg2281>},
-      {"seed_reset_melg2281(std::vector)",
-       test_seed_reset_vector<melg64::melg2281>},
-      {"seed_reset_melg4253", test_seed_reset<melg64::melg4253>},
-      {"seed_reset_melg4253(raw array)", test_seed_reset_raw<melg64::melg4253>},
-      {"seed_reset_melg4253(std::array)",
-       test_seed_reset_array<melg64::melg4253>},
-      {"seed_reset_melg4253(std::vector)",
-       test_seed_reset_vector<melg64::melg4253>},
-      {"seed_reset_melg11213", test_seed_reset<melg64::melg11213>},
-      {"seed_reset_melg11213(raw array)",
-       test_seed_reset_raw<melg64::melg11213>},
-      {"seed_reset_melg11213(std::array)",
-       test_seed_reset_array<melg64::melg11213>},
-      {"seed_reset_melg11213(std::vector)",
-       test_seed_reset_vector<melg64::melg11213>},
-      {"seed_reset_melg19937", test_seed_reset<melg64::melg19937>},
-      {"seed_reset_melg19937(raw array)",
-       test_seed_reset_raw<melg64::melg19937>},
-      {"seed_reset_melg19937(std::array)",
-       test_seed_reset_array<melg64::melg19937>},
-      {"seed_reset_melg19937(std::vector)",
-       test_seed_reset_vector<melg64::melg19937>},
-      {"seed_reset_melg44497", test_seed_reset<melg64::melg44497>},
-      {"seed_reset_melg44497(raw array)",
-       test_seed_reset_raw<melg64::melg44497>},
-      {"seed_reset_melg44497(std::array)",
-       test_seed_reset_array<melg64::melg44497>},
-      {"seed_reset_melg44497(std::vector)",
-       test_seed_reset_vector<melg64::melg44497>}};
+      {"known output (raw array)", test_known_output_raw<URBG>},
+      {"known output (std::array)", test_known_output_array<URBG>},
+      {"known output (std::vector)", test_known_output_vector<URBG>},
+      {"default constructor", test_default_constructor<URBG>},
+      {"seed reset", test_seed_reset<URBG>},
+      {"seed reset (raw array)", test_seed_reset_raw<URBG>},
+      {"seed reset (std::array)", test_seed_reset_array<URBG>},
+      {"seed reset (std::vector)", test_seed_reset_vector<URBG>}};
 
   int count_failed = 0;
 
@@ -371,3 +283,5 @@ int main(void) {
 
   return count_failed;
 }
+
+#endif /* TEST_MELG64_COMMON_H_ */
