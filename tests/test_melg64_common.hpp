@@ -145,6 +145,19 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
 
   engine.jump();
 
+  expected.clear();
+
+  for (std::size_t i = 0; i < 206; i++) std::getline(ifs, header);
+
+  while (ifs >> receiver) {
+    expected.push_back(receiver);
+    if (expected.size() == sample_size) break;
+  }
+
+  if (expected.size() < sample_size) {
+    throw std::runtime_error(std::string("insufficient data in ") + file);
+  }
+
   return succeeded;
 }
 
