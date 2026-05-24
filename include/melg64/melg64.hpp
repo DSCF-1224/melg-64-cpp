@@ -176,6 +176,16 @@ class melg_base {
 
   struct ZeroStateTag final {};
 
+  explicit melg_base(const melg_base& other, ZeroStateTag) noexcept {
+    this->lung_ = static_cast<melg64::result_type>(0);
+
+    for (std::size_t i = 0; i < this->NN; i++) this->state_[i] = this->lung_;
+
+    this->i_ = other.i_;
+
+    this->next_ = other.next_;
+  }
+
   void add(melg_base& other) noexcept {
     /* adds the lung */
 
