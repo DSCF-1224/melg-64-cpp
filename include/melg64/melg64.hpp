@@ -174,6 +174,41 @@ class melg_base {
 
   FuncPtr next_;
 
+  void add(melg_base& other) noexcept {
+    /* adds the lung */
+
+    other.lung_ ^= this->lung_;
+
+    /* adds the states */
+
+    const std::size_t n1 = other.i_;
+    const std::size_t n2 = this->i_;
+
+    if (n1 <= n2) {
+      const std::size_t diff2 = n2 - n1;
+      const std::size_t diff1 = this->NN - diff2;
+
+      std::size_t i = n1;
+
+      for (; i < diff1; i++) other.state_[i] ^= this->state_[i + diff2];
+
+      for (; i < this->NN; i++) other.state_[i] ^= this->state_[i - diff1];
+
+      for (i = 0; i < n1; i++) other.state_[i] ^= this->state_[i + diff2];
+    } else {
+      const std::size_t diff2 = n1 - n2;
+      const std::size_t diff1 = this->NN - diff2;
+
+      std::size_t i = n1;
+
+      for (; i < this->NN; i++) other.state_[i] ^= this->state_[i - diff2];
+
+      for (i = 0; i < diff2; i++) other.state_[i] ^= this->state_[i + diff1];
+
+      for (; i < n1; i++) other.state_[i] ^= this->state_[i - diff2];
+    }
+  }
+
   constexpr void initialize_member_i(void) noexcept {
     this->i_ = static_cast<std::size_t>(0);
   }
