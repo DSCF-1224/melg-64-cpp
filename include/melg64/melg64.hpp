@@ -489,6 +489,15 @@ using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95, 6,
 template <std::uniform_random_bit_generator URBG>
 struct jump_string;
 
+template <>
+struct jump_string<melg607> {
+  static constexpr const char* value =
+      "f3d27aef5c025caca71e8dfb38d8e7ce5fe0d46c04317c6f50"
+      "ef41c5edce6ebf48fe2929dd0ca41af901d536b52ae616662b"
+      "620bad0a18060e54c127d729bdcb439f7ee398bec8e7195562"
+      "9c";
+};
+
 }  // namespace melg64
 
 static_assert(std::unsigned_integral<melg64::result_type>);
