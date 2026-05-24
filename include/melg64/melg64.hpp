@@ -305,7 +305,7 @@ class melg_base {
           << 63)); /* MSB is 1; assuring non-zero initial array. Corrected. */
   }
 
-  void jump(const char* jump_string) noexcept {
+  void jump_impl(const char* jump_string) noexcept {
     melg_base melg_init(*this, melg_base::ZeroStateTag{});
 
     const std::size_t total_bits = this->NN * this->W + this->P;
