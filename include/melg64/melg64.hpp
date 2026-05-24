@@ -70,6 +70,9 @@
 
 namespace melg64 {
 
+template <std::uniform_random_bit_generator URBG>
+struct jump_string;
+
 using result_type = std::uint_fast64_t;
 
 template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
@@ -485,9 +488,6 @@ using melg19937 = melg_base<311, 81, 0x5c32e06df730fc42UL, 33, 19, 16,
 
 using melg44497 = melg_base<695, 373, 0x4fa9ca36f293c9a9UL, 17, 95, 6,
                             0x6fbbee29aaefd91UL, 14, 37>;
-
-template <std::uniform_random_bit_generator URBG>
-struct jump_string;
 
 template <>
 struct jump_string<melg607> {
