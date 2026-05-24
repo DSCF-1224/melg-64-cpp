@@ -143,6 +143,8 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
     }
   }
 
+  engine.jump();
+
   return succeeded;
 }
 
