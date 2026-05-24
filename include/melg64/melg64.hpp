@@ -174,6 +174,8 @@ class melg_base {
 
   FuncPtr next_;
 
+  struct ZeroStateTag final {};
+
   void add(melg_base& other) noexcept {
     /* adds the lung */
 
