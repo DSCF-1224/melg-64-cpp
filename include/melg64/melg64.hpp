@@ -305,6 +305,45 @@ class melg_base {
           << 63)); /* MSB is 1; assuring non-zero initial array. Corrected. */
   }
 
+  void jump(const char* jump_string) noexcept {
+    melg_base melg_init(*this, melg_base::ZeroStateTag{});
+
+    const std::size_t total_bits = this->NN * this->W + this->P;
+
+    const std::size_t total_chars = static_cast<std::size_t>(
+        std::ceil(static_cast<double>(total_bits) / 4));
+
+    for (std::size_t i = 0; i < total_chars; i++) {
+      char bits = jump_string[i];
+
+      if (('a' <= bits) && (bits <= 'f')) {
+        bits -= static_cast<char>('a' - 10);
+      } else {
+        bits -= '0';
+      }
+
+      bits &= static_cast<char>(0x0f);
+
+      char mask = static_cast<char>(0x08);
+
+      for (int j = 0; j < 4; j++) {
+        if ((bits & mask) != static_cast<char>(0)) this->add(melg_init);
+        (*this)();
+        mask >>= 1;
+      }
+    }
+
+    this->lung_ = melg_init.lung_;
+
+    this->i_ = melg_init.i_;
+
+    this->next_ = melg_init.next_;
+
+    for (std::size_t k = 0; k < this->NN; k++) {
+      this->state_[k] = melg_init.state_[k];
+    }
+  }
+
   static constexpr melg64::result_type mat3neg(
       const int t, const melg64::result_type v) noexcept {
     return v ^ (v << t);
