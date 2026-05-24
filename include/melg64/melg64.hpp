@@ -119,6 +119,14 @@ class melg_base {
            (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
   }
 
+  void jump() noexcept {
+    static_assert(
+        requires { jump_string<melg_base>::value; },
+        "`jump_string` not defined for this variant");
+
+    this->jump_impl(jump_string<melg_base>::value);
+  }
+
   constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
     this->initialize_member_i();
