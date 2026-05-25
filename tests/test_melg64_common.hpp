@@ -93,6 +93,32 @@ bool test_default_constructor() {
   return (&a != &b) && (a == b);
 }
 
+/* test: jump idempotence */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_jump_idempotent() {
+  std::random_device seed_source;
+
+  const melg64::result_type s = static_cast<melg64::result_type>(seed_source());
+
+  URBG a(s), b(s);
+
+  if (&a == &b) {
+    return false;
+  }
+
+  a.jump();
+  b.jump();
+
+  const bool failed = (a != b);
+
+  if (failed) {
+    std::cout << "s: " << s << std::endl;
+  }
+
+  return !failed;
+}
+
 /* test: known output */
 
 const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
