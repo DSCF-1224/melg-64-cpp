@@ -143,8 +143,6 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
     }
   }
 
-  engine.jump();
-
   expected.clear();
 
   for (std::size_t i = 0; i < 206; i++) std::getline(ifs, header);
@@ -156,6 +154,24 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
 
   if (expected.size() < sample_size) {
     throw std::runtime_error(std::string("insufficient data in ") + file);
+  }
+
+  for (std::size_t i = 0; i < sample_size; i++) engine();
+
+  engine.jump();
+
+  for (std::size_t i = 0; i < sample_size; i++) {
+    const melg64::result_type harvest = engine();
+
+    succeeded = (harvest == expected[i]);
+
+    if (!succeeded) {
+      std::cout << "  index    : " << i << std::endl
+                << "  expected : " << expected[i] << std::endl
+                << "  harvest  : " << harvest << std::endl;
+
+      return succeeded;
+    }
   }
 
   return succeeded;
