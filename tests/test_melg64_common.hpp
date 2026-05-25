@@ -84,6 +84,15 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
+/* test: default constructor */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_default_constructor() {
+  URBG a;
+  URBG b(URBG::default_seed);
+  return (&a != &b) && (a == b);
+}
+
 /* test: known output */
 
 const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
@@ -215,15 +224,6 @@ bool test_known_output_array(void) {
 template <std::uniform_random_bit_generator URBG>
 bool test_known_output_vector(void) {
   return test_known_output<URBG>(init_key_vector);
-}
-
-/* test: default constructor */
-
-template <std::uniform_random_bit_generator URBG>
-bool test_default_constructor() {
-  URBG a;
-  URBG b(URBG::default_seed);
-  return (&a != &b) && (a == b);
 }
 
 /* test: reset by `seed()` */
