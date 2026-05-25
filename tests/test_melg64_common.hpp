@@ -325,6 +325,7 @@ int test_runner() {
       {"known output (std::array)", test_known_output_array<URBG>},
       {"known output (std::vector)", test_known_output_vector<URBG>},
       {"default constructor", test_default_constructor<URBG>},
+      {"jump idempotence", test_jump_idempotent<URBG>},
       {"seed reset", test_seed_reset<URBG>},
       {"seed reset (raw array)", test_seed_reset_raw<URBG>},
       {"seed reset (std::array)", test_seed_reset_array<URBG>},
