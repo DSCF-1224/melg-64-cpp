@@ -160,34 +160,34 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
-  static constexpr inline std::ptrdiff_t Lag1 = __Lag1;
+  static constexpr std::ptrdiff_t Lag1 = __Lag1;
 
-  static constexpr inline melg64::result_type mag01[2] = {
+  static constexpr melg64::result_type mag01[2] = {
       static_cast<melg64::result_type>(0), __MatrixA};
 
-  static constexpr inline melg64::result_type Mask1 = __Mask1;
+  static constexpr melg64::result_type Mask1 = __Mask1;
 
-  static constexpr inline std::size_t MM = __MM;
+  static constexpr std::size_t MM = __MM;
 
-  static constexpr inline std::size_t NN = __NN;
+  static constexpr std::size_t NN = __NN;
 
-  static constexpr inline std::ptrdiff_t Lag1Over =
+  static constexpr std::ptrdiff_t Lag1Over =
       static_cast<std::ptrdiff_t>(__NN) - __Lag1;
 
-  static constexpr inline int P = __P;
+  static constexpr int P = __P;
 
-  static constexpr inline int ShiftLungNeg = __ShiftLungNeg;
+  static constexpr int ShiftLungNeg = __ShiftLungNeg;
 
-  static constexpr inline int ShiftLungPos = __ShiftLungPos;
+  static constexpr int ShiftLungPos = __ShiftLungPos;
 
-  static constexpr inline int Shift1 = __Shift1;
+  static constexpr int Shift1 = __Shift1;
 
-  static constexpr inline int W = 64;
+  static constexpr int W = 64;
 
-  static constexpr inline melg64::result_type MaskU =
+  static constexpr melg64::result_type MaskU =
       (~static_cast<melg64::result_type>(0)) << (W - __P);
 
-  static constexpr inline melg64::result_type MaskL = ~MaskU;
+  static constexpr melg64::result_type MaskL = ~MaskU;
 
   std::size_t i_;
 
