@@ -3,6 +3,8 @@
 C++ header-only adaptation of the MELG family — 64-bit maximally equidistributed
 F<sub>2</sub>-linear generators with Mersenne prime period.
 
+[![CI](https://github.com/DSCF-1224/melg-64-cpp/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/DSCF-1224/melg-64-cpp/actions/workflows/cmake-multi-platform.yml)
+
 ## License and Attribution
 
 This library is a C++ adaptation of the original C implementation by
