@@ -19,6 +19,20 @@ add_subdirectory(melg-64-cpp)
 target_link_libraries(your_target PRIVATE melg64)
 ```
 
+## Generators
+
+| Type alias          | Period                |
+|:--------------------|:----------------------|
+| `melg64::melg607`   | 2<sup>607</sup> - 1   |
+| `melg64::melg1279`  | 2<sup>1279</sup> - 1  |
+| `melg64::melg2281`  | 2<sup>2281</sup> - 1  |
+| `melg64::melg4253`  | 2<sup>4253</sup> - 1  |
+| `melg64::melg11213` | 2<sup>11213</sup> - 1 |
+| `melg64::melg19937` | 2<sup>19937</sup> - 1 |
+| `melg64::melg44497` | 2<sup>44497</sup> - 1 |
+
+All types satisfy `std::uniform_random_bit_generator` and are interchangeable with standard library distributions.
+
 ## License and Attribution
 
 This library is a C++ adaptation of the original C implementation by
