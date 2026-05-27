@@ -133,12 +133,21 @@ class melg_base {
     this->jump_impl(jump_string<melg_base>::value);
   }
 
+  /**
+   * @brief Sets the current state of the engine with a single seed value.
+   * @param s The seed value to use to set the state
+   */
   constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
     this->initialize_member_i();
     this->initialize_member_next();
   }
 
+  /**
+   * @brief Sets the current state of the engine with an array seed.
+   * @param init_key The array seed to use to set the state
+   * @attention !init_key.empty()
+   */
   constexpr void seed(std::span<const melg64::result_type> init_key) {
     assert(!init_key.empty());
 
