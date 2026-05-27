@@ -84,6 +84,41 @@ void PrintBuildInfo() {
   std::cout << std::endl << std::endl;
 }
 
+/* test: default constructor */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_default_constructor() {
+  URBG a;
+  URBG b(URBG::default_seed);
+  return (&a != &b) && (a == b);
+}
+
+/* test: jump idempotence */
+
+template <std::uniform_random_bit_generator URBG>
+bool test_jump_idempotent() {
+  std::random_device seed_source;
+
+  const melg64::result_type s = static_cast<melg64::result_type>(seed_source());
+
+  URBG a(s), b(s);
+
+  if (&a == &b) {
+    return false;
+  }
+
+  a.jump();
+  b.jump();
+
+  const bool failed = (a != b);
+
+  if (failed) {
+    std::cout << "s: " << s << std::endl;
+  }
+
+  return !failed;
+}
+
 /* test: known output */
 
 const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
@@ -217,15 +252,6 @@ bool test_known_output_vector(void) {
   return test_known_output<URBG>(init_key_vector);
 }
 
-/* test: default constructor */
-
-template <std::uniform_random_bit_generator URBG>
-bool test_default_constructor() {
-  URBG a;
-  URBG b(URBG::default_seed);
-  return (&a != &b) && (a == b);
-}
-
 /* test: reset by `seed()` */
 
 template <std::uniform_random_bit_generator URBG>
@@ -299,6 +325,7 @@ int test_runner() {
       {"known output (std::array)", test_known_output_array<URBG>},
       {"known output (std::vector)", test_known_output_vector<URBG>},
       {"default constructor", test_default_constructor<URBG>},
+      {"jump idempotence", test_jump_idempotent<URBG>},
       {"seed reset", test_seed_reset<URBG>},
       {"seed reset (raw array)", test_seed_reset_raw<URBG>},
       {"seed reset (std::array)", test_seed_reset_array<URBG>},
