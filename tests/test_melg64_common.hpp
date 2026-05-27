@@ -27,8 +27,10 @@
 
 #include <random>
 // https://cppreference.com/cpp/header/random
+// https://cppreference.com/cpp/numeric/random/random_device
 // https://cppreference.com/cpp/numeric/random/uniform_random_bit_generator
 // https://cpprefjp.github.io/reference/random.html
+// https://cpprefjp.github.io/reference/random/random_device.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
 #include <span>
@@ -37,11 +39,14 @@
 
 #include <stdexcept>
 // https://cppreference.com/cpp/header/stdexcept
+// https://cppreference.com/cpp/error/runtime_error
 // https://cpprefjp.github.io/reference/stdexcept.html
 
 #include <string>
 // https://cppreference.com/cpp/header/string
+// https://cppreference.com/cpp/string/basic_string
 // https://cpprefjp.github.io/reference/string.html
+// https://cpprefjp.github.io/reference/string/basic_string.html
 
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
@@ -49,7 +54,9 @@
 
 #include <vector>
 // https://cppreference.com/cpp/header/vector
+// https://cppreference.com/cpp/container/vector
 // https://cpprefjp.github.io/reference/vector.html
+// https://cpprefjp.github.io/reference/vector/vector.html
 
 #include <melg64/melg64.hpp>
 // target of this test
