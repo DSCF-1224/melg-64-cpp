@@ -22,7 +22,11 @@
 
 #include <algorithm>
 // https://cppreference.com/cpp/header/algorithm
+// https://cppreference.com/cpp/algorithm/equal
+// https://cppreference.com/cpp/algorithm/max
 // https://cpprefjp.github.io/reference/algorithm.html
+// https://cpprefjp.github.io/reference/algorithm/equal.html
+// https://cpprefjp.github.io/reference/algorithm/max.html
 
 #include <array>
 // https://cppreference.com/cpp/header/array
@@ -39,8 +43,10 @@
 #include <cstddef>
 // https://cppreference.com/cpp/header/cstddef
 // https://cppreference.com/cpp/types/ptrdiff_t
+// https://cppreference.com/cpp/types/size_t
 // https://cpprefjp.github.io/reference/cstddef.html
 // https://cpprefjp.github.io/reference/cstddef/ptrdiff_t.html
+// https://cpprefjp.github.io/reference/cstddef/size_t.html
 
 #include <cstdint>
 // https://cppreference.com/cpp/header/cstdint
