@@ -86,7 +86,7 @@ template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
           melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
 class melg_base {
  public:
-  explicit melg_base() { this->seed(); }
+  melg_base() { this->seed(); }
 
   explicit melg_base(const melg64::result_type s) { this->seed(s); }
 
