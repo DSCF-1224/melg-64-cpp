@@ -5,6 +5,20 @@ F<sub>2</sub>-linear generators with Mersenne prime period.
 
 [![CI](https://github.com/DSCF-1224/melg-64-cpp/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/DSCF-1224/melg-64-cpp/actions/workflows/cmake-multi-platform.yml)
 
+## Requirements
+
+- C++20
+
+## Installation
+
+Copy `include/melg64/melg64.hpp` into your project, or add this repository
+as a subdirectory and link via CMake:
+
+```cmake
+add_subdirectory(melg-64-cpp)
+target_link_libraries(your_target PRIVATE melg64)
+```
+
 ## License and Attribution
 
 This library is a C++ adaptation of the original C implementation by
