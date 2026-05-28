@@ -81,7 +81,7 @@ struct jump_string;
 
 using result_type = std::uint_fast64_t;
 
-template <std::size_t NN_, std::size_t __MM, melg64::result_type __MatrixA,
+template <std::size_t NN_, std::size_t MM_, melg64::result_type __MatrixA,
           int __P, std::ptrdiff_t __Lag1, int __Shift1,
           melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
 class melg_base {
@@ -167,7 +167,7 @@ class melg_base {
 
   static constexpr melg64::result_type Mask1 = __Mask1;
 
-  static constexpr std::size_t MM = __MM;
+  static constexpr std::size_t MM = MM_;
 
   static constexpr std::size_t NN = NN_;
 
