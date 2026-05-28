@@ -81,9 +81,9 @@ struct jump_string;
 
 using result_type = std::uint_fast64_t;
 
-template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
-          int __P, std::ptrdiff_t __Lag1, int __Shift1,
-          melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
+template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
+          int P_, std::ptrdiff_t Lag1_, int Shift1_, melg64::result_type Mask1_,
+          int ShiftLungPos_, int ShiftLungNeg_>
 class melg_base {
  public:
   melg_base() { this->seed(); }
@@ -121,7 +121,7 @@ class melg_base {
 
   friend bool operator==(const melg_base& lhs, const melg_base& rhs) noexcept {
     return (lhs.i_ == rhs.i_) &&
-           std::equal(lhs.state_, lhs.state_ + __NN, rhs.state_) &&
+           std::equal(lhs.state_, lhs.state_ + NN_, rhs.state_) &&
            (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
   }
 
@@ -160,32 +160,32 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
-  static constexpr std::ptrdiff_t Lag1 = __Lag1;
+  static constexpr std::ptrdiff_t Lag1 = Lag1_;
 
   static constexpr melg64::result_type mag01[2] = {
-      static_cast<melg64::result_type>(0), __MatrixA};
+      static_cast<melg64::result_type>(0), MatrixA_};
 
-  static constexpr melg64::result_type Mask1 = __Mask1;
+  static constexpr melg64::result_type Mask1 = Mask1_;
 
-  static constexpr std::size_t MM = __MM;
+  static constexpr std::size_t MM = MM_;
 
-  static constexpr std::size_t NN = __NN;
+  static constexpr std::size_t NN = NN_;
 
   static constexpr std::ptrdiff_t Lag1Over =
-      static_cast<std::ptrdiff_t>(__NN) - __Lag1;
+      static_cast<std::ptrdiff_t>(NN_) - Lag1_;
 
-  static constexpr int P = __P;
+  static constexpr int P = P_;
 
-  static constexpr int ShiftLungNeg = __ShiftLungNeg;
+  static constexpr int ShiftLungNeg = ShiftLungNeg_;
 
-  static constexpr int ShiftLungPos = __ShiftLungPos;
+  static constexpr int ShiftLungPos = ShiftLungPos_;
 
-  static constexpr int Shift1 = __Shift1;
+  static constexpr int Shift1 = Shift1_;
 
   static constexpr int W = 64;
 
   static constexpr melg64::result_type MaskU =
-      (~static_cast<melg64::result_type>(0)) << (W - __P);
+      (~static_cast<melg64::result_type>(0)) << (W - P_);
 
   static constexpr melg64::result_type MaskL = ~MaskU;
 
