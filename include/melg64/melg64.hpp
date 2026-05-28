@@ -82,7 +82,7 @@ struct jump_string;
 using result_type = std::uint_fast64_t;
 
 template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
-          int P_, std::ptrdiff_t __Lag1, int __Shift1,
+          int P_, std::ptrdiff_t Lag1_, int __Shift1,
           melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
 class melg_base {
  public:
@@ -160,7 +160,7 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
-  static constexpr std::ptrdiff_t Lag1 = __Lag1;
+  static constexpr std::ptrdiff_t Lag1 = Lag1_;
 
   static constexpr melg64::result_type mag01[2] = {
       static_cast<melg64::result_type>(0), MatrixA_};
@@ -172,7 +172,7 @@ class melg_base {
   static constexpr std::size_t NN = NN_;
 
   static constexpr std::ptrdiff_t Lag1Over =
-      static_cast<std::ptrdiff_t>(NN_) - __Lag1;
+      static_cast<std::ptrdiff_t>(NN_) - Lag1_;
 
   static constexpr int P = P_;
 
