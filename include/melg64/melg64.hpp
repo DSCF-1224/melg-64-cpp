@@ -115,7 +115,7 @@ class melg_base {
     return std::numeric_limits<melg64::result_type>::max();
   }
 
-  melg64::result_type operator()() { return (this->*next_)(); }
+  melg64::result_type operator()() noexcept { return (this->*next_)(); }
 
   // Additions
 
