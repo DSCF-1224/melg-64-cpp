@@ -83,7 +83,7 @@ using result_type = std::uint_fast64_t;
 
 template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
           int P_, std::ptrdiff_t Lag1_, int Shift1_, melg64::result_type Mask1_,
-          int ShiftLungPos_, int __ShiftLungNeg>
+          int ShiftLungPos_, int ShiftLungNeg_>
 class melg_base {
  public:
   melg_base() { this->seed(); }
@@ -176,7 +176,7 @@ class melg_base {
 
   static constexpr int P = P_;
 
-  static constexpr int ShiftLungNeg = __ShiftLungNeg;
+  static constexpr int ShiftLungNeg = ShiftLungNeg_;
 
   static constexpr int ShiftLungPos = ShiftLungPos_;
 
