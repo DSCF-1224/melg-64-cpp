@@ -25,20 +25,39 @@ jobs:
         build_type: [Release]
         c_compiler: [gcc, clang, cl]
         include:
+
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
+
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
+
           - os: ubuntu-latest
             c_compiler: clang
             cpp_compiler: clang++
+
+          - os: ubuntu-latest
+            c_compiler: gcc
+            cpp_compiler: g++
+            build_type: Debug
+            cmake_extra: -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined"
+
+          - os: ubuntu-latest
+            c_compiler: clang
+            cpp_compiler: clang++
+            build_type: Debug
+            cmake_extra: -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined"
+
         exclude:
+
           - os: windows-latest
             c_compiler: gcc
+
           - os: windows-latest
             c_compiler: clang
+
           - os: ubuntu-latest
             c_compiler: cl
 
@@ -73,6 +92,7 @@ jobs:
         -DCMAKE_CXX_STANDARD=20
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        ${{ matrix.cmake_extra }}
         -S ${{ github.workspace }}
 
     - name: Build
