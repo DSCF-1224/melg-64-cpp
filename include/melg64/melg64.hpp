@@ -86,20 +86,35 @@ template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
           int ShiftLungPos_, int ShiftLungNeg_>
 class melg_base {
  public:
+  /**
+   * @brief Constructs the engine with the default seed value.
+   */
   melg_base() { this->seed(); }
 
+  /**
+   * @brief Constructs the engine with a single seed value.
+   * @param s The seed value used to initialize the state.
+   */
   explicit melg_base(const melg64::result_type s) { this->seed(s); }
 
+  /**
+   * @brief Constructs the engine with an array seed.
+   * @param init_key The key array used to initialize the state.
+   * @attention !init_key.empty()
+   */
   explicit melg_base(std::span<const melg64::result_type> init_key) {
     this->seed(init_key);
   }
 
+  /**
+   * @brief The default seed value used when no seed is specified.
+   */
+  static constexpr melg64::result_type default_seed =
+      static_cast<melg64::result_type>(19650218UL);
+
   // Requirements
 
   using result_type = melg64::result_type;
-
-  static constexpr melg64::result_type default_seed =
-      static_cast<melg64::result_type>(19650218UL);
 
   /**
    * @brief Yields the smallest value that `melg_base`'s `operator()` may return
@@ -115,16 +130,29 @@ class melg_base {
     return std::numeric_limits<melg64::result_type>::max();
   }
 
+  /**
+   * @brief Generates a pseudo-random value.
+   * @return A pseudo-random value in [min(), max()].
+   */
   melg64::result_type operator()() noexcept { return (this->*next_)(); }
 
   // Additions
 
+  /**
+   * @brief Compares two engines for equality.
+   * @return true if both engines would generate the same sequence.
+   */
   friend bool operator==(const melg_base& lhs, const melg_base& rhs) noexcept {
     return (lhs.i_ == rhs.i_) &&
            std::equal(lhs.state_, lhs.state_ + NN_, rhs.state_) &&
            (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
   }
 
+  /**
+   * @brief Advances the engine's state by 2^256 steps.
+   * @note Equivalent to calling operator() 2^256 times.
+   *       Useful for generating disjoint sequences in parallel computations.
+   */
   void jump() noexcept {
     static_assert(
         requires { jump_string<melg_base>::value; },
