@@ -28,10 +28,6 @@
 // https://cpprefjp.github.io/reference/algorithm/equal.html
 // https://cpprefjp.github.io/reference/algorithm/max.html
 
-#include <array>
-// https://cppreference.com/cpp/header/array
-// https://cpprefjp.github.io/reference/array.html
-
 #include <cassert>
 // https://cppreference.com/cpp/header/cassert
 // https://cpprefjp.github.io/reference/cassert.html
@@ -76,30 +72,45 @@
 
 namespace melg64 {
 
+using result_type = std::uint_fast64_t;
+
 template <std::uniform_random_bit_generator URBG>
 struct jump_string;
 
-using result_type = std::uint_fast64_t;
-
-template <std::size_t __NN, std::size_t __MM, melg64::result_type __MatrixA,
-          int __P, std::ptrdiff_t __Lag1, int __Shift1,
-          melg64::result_type __Mask1, int __ShiftLungPos, int __ShiftLungNeg>
+template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
+          int P_, std::ptrdiff_t Lag1_, int Shift1_, melg64::result_type Mask1_,
+          int ShiftLungPos_, int ShiftLungNeg_>
 class melg_base {
  public:
-  explicit melg_base() { this->seed(); }
+  /**
+   * @brief Constructs the engine with the default seed value.
+   */
+  melg_base() { this->seed(); }
 
+  /**
+   * @brief Constructs the engine with a single seed value.
+   * @param s The seed value used to initialize the state.
+   */
   explicit melg_base(const melg64::result_type s) { this->seed(s); }
 
+  /**
+   * @brief Constructs the engine with an array seed.
+   * @param init_key The key array used to initialize the state.
+   * @attention !init_key.empty()
+   */
   explicit melg_base(std::span<const melg64::result_type> init_key) {
     this->seed(init_key);
   }
 
-  // Requirements
-
-  using result_type = melg64::result_type;
-
+  /**
+   * @brief The default seed value used when no seed is specified.
+   */
   static constexpr melg64::result_type default_seed =
       static_cast<melg64::result_type>(19650218UL);
+
+  // std::uniform_random_bit_generator Requirements
+
+  using result_type = melg64::result_type;
 
   /**
    * @brief Yields the smallest value that `melg_base`'s `operator()` may return
@@ -115,16 +126,29 @@ class melg_base {
     return std::numeric_limits<melg64::result_type>::max();
   }
 
-  melg64::result_type operator()() { return (this->*next_)(); }
+  /**
+   * @brief Generates a pseudo-random value.
+   * @return A pseudo-random value in [min(), max()].
+   */
+  melg64::result_type operator()() noexcept { return (this->*next_)(); }
 
   // Additions
 
+  /**
+   * @brief Compares two engines for equality.
+   * @return true if both engines would generate the same sequence.
+   */
   friend bool operator==(const melg_base& lhs, const melg_base& rhs) noexcept {
     return (lhs.i_ == rhs.i_) &&
-           std::equal(lhs.state_, lhs.state_ + __NN, rhs.state_) &&
+           std::equal(lhs.state_, lhs.state_ + NN_, rhs.state_) &&
            (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
   }
 
+  /**
+   * @brief Advances the engine's state by 2^256 steps.
+   * @note Equivalent to calling operator() 2^256 times.
+   *       Useful for generating disjoint sequences in parallel computations.
+   */
   void jump() noexcept {
     static_assert(
         requires { jump_string<melg_base>::value; },
@@ -133,12 +157,21 @@ class melg_base {
     this->jump_impl(jump_string<melg_base>::value);
   }
 
+  /**
+   * @brief Sets the current state of the engine with a single seed value.
+   * @param s The seed value to use to set the state
+   */
   constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
     this->initialize_member_i();
     this->initialize_member_next();
   }
 
+  /**
+   * @brief Sets the current state of the engine with an array seed.
+   * @param init_key The array seed to use to set the state
+   * @attention !init_key.empty()
+   */
   constexpr void seed(std::span<const melg64::result_type> init_key) {
     assert(!init_key.empty());
 
@@ -151,34 +184,34 @@ class melg_base {
  private:
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
-  static constexpr inline std::ptrdiff_t Lag1 = __Lag1;
+  static constexpr std::ptrdiff_t Lag1 = Lag1_;
 
-  static constexpr inline melg64::result_type mag01[2] = {
-      static_cast<melg64::result_type>(0), __MatrixA};
+  static constexpr melg64::result_type mag01[2] = {
+      static_cast<melg64::result_type>(0), MatrixA_};
 
-  static constexpr inline melg64::result_type Mask1 = __Mask1;
+  static constexpr melg64::result_type Mask1 = Mask1_;
 
-  static constexpr inline std::size_t MM = __MM;
+  static constexpr std::size_t MM = MM_;
 
-  static constexpr inline std::size_t NN = __NN;
+  static constexpr std::size_t NN = NN_;
 
-  static constexpr inline std::ptrdiff_t Lag1Over =
-      static_cast<std::ptrdiff_t>(__NN) - __Lag1;
+  static constexpr std::ptrdiff_t Lag1Over =
+      static_cast<std::ptrdiff_t>(NN_) - Lag1_;
 
-  static constexpr inline int P = __P;
+  static constexpr int P = P_;
 
-  static constexpr inline int ShiftLungNeg = __ShiftLungNeg;
+  static constexpr int ShiftLungNeg = ShiftLungNeg_;
 
-  static constexpr inline int ShiftLungPos = __ShiftLungPos;
+  static constexpr int ShiftLungPos = ShiftLungPos_;
 
-  static constexpr inline int Shift1 = __Shift1;
+  static constexpr int Shift1 = Shift1_;
 
-  static constexpr inline int W = 64;
+  static constexpr int W = 64;
 
-  static constexpr inline melg64::result_type MaskU =
-      (~static_cast<melg64::result_type>(0)) << (W - __P);
+  static constexpr melg64::result_type MaskU =
+      (~static_cast<melg64::result_type>(0)) << (W - P_);
 
-  static constexpr inline melg64::result_type MaskL = ~MaskU;
+  static constexpr melg64::result_type MaskL = ~MaskU;
 
   std::size_t i_;
 
