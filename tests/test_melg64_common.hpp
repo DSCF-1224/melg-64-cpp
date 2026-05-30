@@ -156,8 +156,8 @@ bool compare_output(URBG& engine,
 }
 
 template <std::uniform_random_bit_generator URBG>
-bool test_known_output(std::span<const melg64::result_type> init_key,
-                       const char* file) {
+bool test_known_output_impl(std::span<const melg64::result_type> init_key,
+                            const char* file) {
   std::ifstream ifs(std::string("tests/") + file);
 
   if (!ifs.is_open()) {
@@ -233,7 +233,7 @@ bool test_known_output(std::span<const melg64::result_type> init_key) {
     static_assert(false, "unsupported melg64 type");
   }
 
-  return test_known_output<URBG>(init_key, file);
+  return test_known_output_impl<URBG>(init_key, file);
 }
 
 template <std::uniform_random_bit_generator URBG>
