@@ -138,6 +138,10 @@ class melg_base {
 
   // Additions
 
+  /**
+   * @brief Compares two engines for equality.
+   * @return true if both engines would generate the same sequence.
+   */
   friend bool operator==(const melg_base& lhs, const melg_base& rhs) noexcept {
     return (lhs.i_ == rhs.i_) &&
            std::equal(lhs.state_, lhs.state_ + NN_, rhs.state_) &&
