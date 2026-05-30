@@ -25,25 +25,56 @@ jobs:
         build_type: [Release]
         c_compiler: [gcc, clang, cl]
         include:
+
           - os: windows-latest
             c_compiler: cl
             cpp_compiler: cl
+
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
+
           - os: ubuntu-latest
             c_compiler: clang
             cpp_compiler: clang++
+
+          - os: ubuntu-latest
+            c_compiler: gcc
+            cpp_compiler: g++
+            build_type: Debug
+            cmake_extra: -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined"
+
+          - os: ubuntu-latest
+            c_compiler: clang
+            cpp_compiler: clang++
+            build_type: Debug
+            cmake_extra: -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined"
+
         exclude:
+
           - os: windows-latest
             c_compiler: gcc
+
           - os: windows-latest
             c_compiler: clang
+
           - os: ubuntu-latest
             c_compiler: cl
 
     steps:
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
+
+    - name: Download reference output
+      run: |
+        curl -o tests/melg607-64.out   https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg607-64/melg607-64.out     || exit 1 
+        curl -o tests/melg1279-64.out  https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg1279-64/melg1279-64.out   || exit 1 
+        curl -o tests/melg2281-64.out  https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg2281-64/melg2281-64.out   || exit 1 
+        curl -o tests/melg4253-64.out  https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg4253-64/melg4253-64.out   || exit 1 
+        curl -o tests/melg11213-64.out https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg11213-64/melg11213-64.out || exit 1 
+        curl -o tests/melg19937-64.out https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg19937-64/melg19937-64.out || exit 1 
+        curl -o tests/melg44497-64.out https://raw.githubusercontent.com/sharase/melg-64/refs/heads/master/melg44497-64/melg44497-64.out || exit 1 
 
     - name: Set reusable strings
       # Turn repeated input strings (such as the build output directory) into step outputs. These step outputs can be used throughout the workflow file.
@@ -61,6 +92,7 @@ jobs:
         -DCMAKE_CXX_STANDARD=20
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+        ${{ matrix.cmake_extra }}
         -S ${{ github.workspace }}
 
     - name: Build
@@ -71,4 +103,4 @@ jobs:
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       # Execute tests defined by the CMake configuration. Note that --build-config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --build-config ${{ matrix.build_type }}
+      run: ctest --build-config ${{ matrix.build_type }} --verbose
