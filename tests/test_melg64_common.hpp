@@ -63,7 +63,7 @@
 
 #include "build_info.hpp"
 
-void PrintBuildInfo() {
+void print_build_info() {
   std::cout << "Compiler ID      : " << BUILD_COMPILER_ID << std::endl;
   std::cout << "Compiler Version : " << BUILD_COMPILER_VERSION << std::endl;
   std::cout << "std              : C++" << BUILD_CXX_STANDARD << std::endl;
@@ -321,7 +321,7 @@ struct Test {
 /* test function for each variant */
 template <std::uniform_random_bit_generator URBG>
 int test_runner() {
-  PrintBuildInfo();
+  print_build_info();
 
   const Test tests[] = {
       {"known output (raw array)", test_known_output_raw<URBG>},
