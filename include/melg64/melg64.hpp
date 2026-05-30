@@ -106,12 +106,15 @@ class melg_base {
     this->seed(init_key);
   }
 
+  /**
+   * @brief The default seed value used when no seed is specified.
+   */
+  static constexpr melg64::result_type default_seed =
+      static_cast<melg64::result_type>(19650218UL);
+
   // Requirements
 
   using result_type = melg64::result_type;
-
-  static constexpr melg64::result_type default_seed =
-      static_cast<melg64::result_type>(19650218UL);
 
   /**
    * @brief Yields the smallest value that `melg_base`'s `operator()` may return
