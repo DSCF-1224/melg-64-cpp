@@ -130,6 +130,10 @@ class melg_base {
     return std::numeric_limits<melg64::result_type>::max();
   }
 
+  /**
+   * @brief Generates a pseudo-random value.
+   * @return A pseudo-random value in [min(), max()].
+   */
   melg64::result_type operator()() noexcept { return (this->*next_)(); }
 
   // Additions
