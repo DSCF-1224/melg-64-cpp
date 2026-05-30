@@ -148,6 +148,11 @@ class melg_base {
            (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
   }
 
+  /**
+   * @brief Advances the engine's state by 2^256 steps.
+   * @note Equivalent to calling operator() 2^256 times.
+   *       Useful for generating disjoint sequences in parallel computations.
+   */
   void jump() noexcept {
     static_assert(
         requires { jump_string<melg_base>::value; },
