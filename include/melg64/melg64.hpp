@@ -108,7 +108,7 @@ class melg_base {
   static constexpr melg64::result_type default_seed =
       static_cast<melg64::result_type>(19650218UL);
 
-  // Requirements
+  // std::uniform_random_bit_generator Requirements
 
   using result_type = melg64::result_type;
 
