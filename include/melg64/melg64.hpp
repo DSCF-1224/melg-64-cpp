@@ -28,10 +28,6 @@
 // https://cpprefjp.github.io/reference/algorithm/equal.html
 // https://cpprefjp.github.io/reference/algorithm/max.html
 
-#include <array>
-// https://cppreference.com/cpp/header/array
-// https://cpprefjp.github.io/reference/array.html
-
 #include <cassert>
 // https://cppreference.com/cpp/header/cassert
 // https://cpprefjp.github.io/reference/cassert.html
