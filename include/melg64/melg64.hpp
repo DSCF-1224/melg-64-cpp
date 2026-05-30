@@ -86,10 +86,22 @@ template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
           int ShiftLungPos_, int ShiftLungNeg_>
 class melg_base {
  public:
+  /**
+   * @brief Constructs the engine with the default seed value.
+   */
   melg_base() { this->seed(); }
 
+  /**
+   * @brief Constructs the engine with a single seed value.
+   * @param s The seed value used to initialize the state.
+   */
   explicit melg_base(const melg64::result_type s) { this->seed(s); }
 
+  /**
+   * @brief Constructs the engine with an array seed.
+   * @param init_key The key array used to initialize the state.
+   * @attention !init_key.empty()
+   */
   explicit melg_base(std::span<const melg64::result_type> init_key) {
     this->seed(init_key);
   }
