@@ -138,6 +138,24 @@ const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
                                                        init_key_array.end());
 
 template <std::uniform_random_bit_generator URBG>
+bool compare_output(URBG& engine,
+                    const std::vector<melg64::result_type>& expected) {
+  for (std::size_t i = 0; i < expected.size(); i++) {
+    const melg64::result_type harvest = engine();
+
+    if (harvest != expected[i]) {
+      std::cout << "  index    : " << i << std::endl
+                << "  expected : " << expected[i] << std::endl
+                << "  harvest  : " << harvest << std::endl;
+
+      return false;
+    }
+  }
+
+  return true;
+}
+
+template <std::uniform_random_bit_generator URBG>
 bool test_known_output(std::span<const melg64::result_type> init_key,
                        const char* file) {
   std::ifstream ifs(std::string("tests/") + file);
@@ -167,23 +185,9 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
     throw std::runtime_error(std::string("insufficient data in ") + file);
   }
 
-  bool succeeded;
-
   URBG engine(init_key);
 
-  for (std::size_t i = 0; i < sample_size; i++) {
-    const melg64::result_type harvest = engine();
-
-    succeeded = (harvest == expected[i]);
-
-    if (!succeeded) {
-      std::cout << "  index    : " << i << std::endl
-                << "  expected : " << expected[i] << std::endl
-                << "  harvest  : " << harvest << std::endl;
-
-      return succeeded;
-    }
-  }
+  if (!compare_output(engine, expected)) return false;
 
   expected.clear();
 
@@ -202,21 +206,9 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
 
   engine.jump();
 
-  for (std::size_t i = 0; i < sample_size; i++) {
-    const melg64::result_type harvest = engine();
+  if (!compare_output(engine, expected)) return false;
 
-    succeeded = (harvest == expected[i]);
-
-    if (!succeeded) {
-      std::cout << "  index    : " << i << std::endl
-                << "  expected : " << expected[i] << std::endl
-                << "  harvest  : " << harvest << std::endl;
-
-      return succeeded;
-    }
-  }
-
-  return succeeded;
+  return true;
 }
 
 template <std::uniform_random_bit_generator URBG>
