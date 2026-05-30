@@ -271,7 +271,7 @@ bool test_seed_reset() {
 
   if (&a == &b) return false;
 
-  for (size_t i = 0; i < 100; i++) {
+  for (std::size_t i = 0; i < 100; i++) {
     a();
   }
 
@@ -291,7 +291,7 @@ bool test_seed_reset(std::span<const melg64::result_type> init_key) {
 
   if (&a == &b) return false;
 
-  for (size_t i = 0; i < 100; i++) {
+  for (std::size_t i = 0; i < 100; i++) {
     a();
   }
 
