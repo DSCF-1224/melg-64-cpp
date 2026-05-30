@@ -72,10 +72,10 @@
 
 namespace melg64 {
 
+using result_type = std::uint_fast64_t;
+
 template <std::uniform_random_bit_generator URBG>
 struct jump_string;
-
-using result_type = std::uint_fast64_t;
 
 template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
           int P_, std::ptrdiff_t Lag1_, int Shift1_, melg64::result_type Mask1_,
