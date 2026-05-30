@@ -168,6 +168,10 @@ bool test_known_output_impl(std::span<const melg64::result_type> init_key,
 
   static_assert(sample_size > 0);
 
+  // Skip floating-point output section and section headers.
+  // 1000 outputs of genrand64_res53 + blank lines + headers = 206 lines
+  constexpr std::size_t lines_to_skip = 206;
+
   melg64::result_type receiver;
 
   std::vector<melg64::result_type> expected;
@@ -191,7 +195,7 @@ bool test_known_output_impl(std::span<const melg64::result_type> init_key,
 
   expected.clear();
 
-  for (std::size_t i = 0; i < 206; i++) std::getline(ifs, header);
+  for (std::size_t i = 0; i < lines_to_skip; i++) std::getline(ifs, header);
 
   while (ifs >> receiver) {
     expected.push_back(receiver);
