@@ -33,3 +33,27 @@ if(MELG64_BUILD_TESTS)
         )
     endforeach()
 endif()
+
+option(MELG64_BUILD_EXAMPLES "Build examples" ON)
+if(MELG64_BUILD_EXAMPLES)
+    enable_testing()
+
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/tests/build_info.inc
+        ${CMAKE_CURRENT_BINARY_DIR}/examples/build_info.hpp
+    )
+
+    foreach(variant 607 1279 2281 4253 11213 19937 44497)
+        add_executable(basic_usage_melg${variant} examples/basic_usage_melg${variant}.cpp)
+        target_link_libraries(basic_usage_melg${variant} PRIVATE melg64)
+        target_include_directories(basic_usage_melg${variant} PRIVATE
+            ${CMAKE_CURRENT_BINARY_DIR}/examples
+        )
+
+        add_test(
+            NAME basic_usage_melg${variant}
+            COMMAND basic_usage_melg${variant}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        )
+    endforeach()
+endif()
