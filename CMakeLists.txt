@@ -31,6 +31,8 @@ if(MELG64_BUILD_TESTS)
             COMMAND test_melg${variant}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         )
+
+        set_tests_properties(test_melg${variant} PROPERTIES LABELS "test")
     endforeach()
 endif()
 
@@ -55,5 +57,7 @@ if(MELG64_BUILD_EXAMPLES)
             COMMAND basic_usage_melg${variant}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
         )
+
+        set_tests_properties(basic_usage_melg${variant} PROPERTIES LABELS "example")
     endforeach()
 endif()
