@@ -71,6 +71,18 @@ void example_default_seed() {
   }
 }
 
+/**
+ * @brief zero seed
+ */
+template <std::uniform_random_bit_generator URBG>
+void example_zero_seed() {
+  URBG engine(static_cast<melg64::result_type>(0));
+
+  for (std::size_t i = 0; i < 5; i++) {
+    std::cout << i << " " << engine() << std::endl;
+  }
+}
+
 struct Example {
   const char* name;
   void (*func)();
@@ -81,7 +93,8 @@ template <std::uniform_random_bit_generator URBG>
 int example_runner() {
   print_build_info();
 
-  const Example examples[] = {{"default seed", example_default_seed<URBG>}};
+  const Example examples[] = {{"default seed", example_default_seed<URBG>},
+                              {"zero seed", example_zero_seed<URBG>}};
 
   for (const auto& example : examples) {
     try {
