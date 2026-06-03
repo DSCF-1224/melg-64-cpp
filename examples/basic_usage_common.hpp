@@ -30,6 +30,12 @@
 // https://cppreference.com/cpp/header/string_view
 // https://cpprefjp.github.io/reference/string_view.html
 
+#include <vector>
+// https://cppreference.com/cpp/header/vector
+// https://cppreference.com/cpp/container/vector
+// https://cpprefjp.github.io/reference/vector.html
+// https://cpprefjp.github.io/reference/vector/vector.html
+
 #include <melg64/melg64.hpp>
 // target of this example
 
@@ -121,6 +127,19 @@ void example_array_seed_array() {
   output_generated_values(engine);
 }
 
+/**
+ * @brief array seed (std::vector)
+ */
+template <std::uniform_random_bit_generator URBG>
+void example_array_seed_vector() {
+  const std::vector<melg64::result_type> init_key_vector = {
+      0x12345UL, 0x23456UL, 0x34567UL, 0x45678UL};
+
+  URBG engine(init_key_vector);
+
+  output_generated_values(engine);
+}
+
 struct Example {
   const char* name;
   void (*func)();
@@ -135,7 +154,8 @@ int example_runner() {
       {"default seed", example_default_seed<URBG>},
       {"zero seed", example_zero_seed<URBG>},
       {"array seed (raw array)", example_array_seed_raw<URBG>},
-      {"array seed (std::array)", example_array_seed_array<URBG>}};
+      {"array seed (std::array)", example_array_seed_array<URBG>},
+      {"array seed (std::vector)", example_array_seed_vector<URBG>}};
 
   for (const auto& example : examples) {
     try {
