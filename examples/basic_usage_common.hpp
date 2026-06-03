@@ -60,15 +60,23 @@ void print_build_info() {
 }
 
 /**
+ * @brief output the generated values
+ */
+template <std::uniform_random_bit_generator URBG>
+void output_generated_values(URBG& engine) {
+  for (std::size_t i = 0; i < 5; i++) {
+    std::cout << i << " " << engine() << std::endl;
+  }
+}
+
+/**
  * @brief default seed
  */
 template <std::uniform_random_bit_generator URBG>
 void example_default_seed() {
   URBG engine;
 
-  for (std::size_t i = 0; i < 5; i++) {
-    std::cout << i << " " << engine() << std::endl;
-  }
+  output_generated_values(engine);
 }
 
 /**
@@ -78,9 +86,7 @@ template <std::uniform_random_bit_generator URBG>
 void example_zero_seed() {
   URBG engine(static_cast<melg64::result_type>(0));
 
-  for (std::size_t i = 0; i < 5; i++) {
-    std::cout << i << " " << engine() << std::endl;
-  }
+  output_generated_values(engine);
 }
 
 struct Example {
