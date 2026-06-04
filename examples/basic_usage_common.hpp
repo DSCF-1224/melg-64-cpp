@@ -12,6 +12,14 @@
 // https://cpprefjp.github.io/reference/cstdlib/exit_success.html
 // https://cpprefjp.github.io/reference/cstdlib/exit_failure.html
 
+#include <iomanip>
+// https://cppreference.com/cpp/header/iomanip
+// https://cppreference.com/cpp/io/manip/setw
+// https://cppreference.com/cpp/io/manip/left
+// https://cpprefjp.github.io/reference/iomanip.html
+// https://cpprefjp.github.io/reference/iomanip/setw.html
+// https://cpprefjp.github.io/reference/ios/right.html
+
 #include <iostream>
 // https://cppreference.com/cpp/header/iostream
 // https://cppreference.com/cpp/io/cout
@@ -75,7 +83,7 @@ void print_build_info() {
 template <std::uniform_random_bit_generator URBG>
 void output_generated_values(URBG& engine) {
   for (std::size_t i = 0; i < 5; i++) {
-    std::cout << i << " " << engine() << std::endl;
+    std::cout << i << std::right << std::setw(21) << engine() << std::endl;
   }
 }
 
