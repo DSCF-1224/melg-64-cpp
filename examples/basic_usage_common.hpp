@@ -79,94 +79,67 @@ void output_generated_values(URBG& engine) {
   }
 }
 
-/**
- * @brief default seed
- */
-template <std::uniform_random_bit_generator URBG>
-void example_default_seed() {
-  URBG engine;
-
-  output_generated_values(engine);
-}
-
-/**
- * @brief zero seed
- */
-template <std::uniform_random_bit_generator URBG>
-void example_zero_seed() {
-  URBG engine(static_cast<melg64::result_type>(0));
-
-  output_generated_values(engine);
-}
-
-// example of array seed (raw array)
-
-/**
- * @brief array seed (raw array)
- */
-template <std::uniform_random_bit_generator URBG>
-void example_array_seed_raw() {
-  const melg64::result_type init_key_raw[4] = {0x12345UL, 0x23456UL, 0x34567UL,
-                                               0x45678UL};
-
-  URBG engine(init_key_raw);
-
-  output_generated_values(engine);
-}
-
-/**
- * @brief array seed (std::array)
- */
-template <std::uniform_random_bit_generator URBG>
-void example_array_seed_array() {
-  const std::array<melg64::result_type, 4> init_key_array = {
-      0x12345UL, 0x23456UL, 0x34567UL, 0x45678UL};
-
-  URBG engine(init_key_array);
-
-  output_generated_values(engine);
-}
-
-/**
- * @brief array seed (std::vector)
- */
-template <std::uniform_random_bit_generator URBG>
-void example_array_seed_vector() {
-  const std::vector<melg64::result_type> init_key_vector = {
-      0x12345UL, 0x23456UL, 0x34567UL, 0x45678UL};
-
-  URBG engine(init_key_vector);
-
-  output_generated_values(engine);
-}
-
-struct Example {
-  const char* name;
-  void (*func)();
-};
-
 /* test function for each variant */
 template <std::uniform_random_bit_generator URBG>
 int example_runner() {
   print_build_info();
 
-  const Example examples[] = {
-      {"default seed", example_default_seed<URBG>},
-      {"zero seed", example_zero_seed<URBG>},
-      {"array seed (raw array)", example_array_seed_raw<URBG>},
-      {"array seed (std::array)", example_array_seed_array<URBG>},
-      {"array seed (std::vector)", example_array_seed_vector<URBG>}};
+  try {
+    {
+      std::cout << "Default seed:" << std::endl;
 
-  for (const auto& example : examples) {
-    try {
-      example.func();
-    } catch (const std::exception& exception) {
-      std::cerr << "FAIL : " << example.name << std::endl;
-      std::cerr << exception.what() << std::endl;
-      return EXIT_FAILURE;
+      URBG engine;
+
+      output_generated_values(engine);
+
+      std::cout << std::endl;
     }
+    {
+      std::cout << "Single seed (zero):" << std::endl;
 
-    std::cout << "PASS : " << example.name << std::endl;
+      URBG engine(0);
+
+      output_generated_values(engine);
+
+      std::cout << std::endl;
+    }
+    {
+      std::cout << "Array seed (raw array):" << std::endl;
+
+      const melg64::result_type init_key[4] = {0x12345UL, 0x23456UL, 0x34567UL,
+                                               0x45678UL};
+
+      URBG engine(init_key);
+
+      output_generated_values(engine);
+
+      std::cout << std::endl;
+    }
+    {
+      std::cout << "Array seed (std::array):" << std::endl;
+      const std::array<melg64::result_type, 4> init_key = {
+          0x12345UL, 0x23456UL, 0x34567UL, 0x45678UL};
+
+      URBG engine(init_key);
+
+      output_generated_values(engine);
+
+      std::cout << std::endl;
+    }
+    {
+      std::cout << "Array seed (std::vector):" << std::endl;
+      const std::vector<melg64::result_type> init_key = {0x12345UL, 0x23456UL,
+                                                         0x34567UL, 0x45678UL};
+
+      URBG engine(init_key);
+
+      output_generated_values(engine);
+
+      std::cout << std::endl;
+    }
+  } catch (const std::exception& exception) {
+    std::cerr << exception.what() << std::endl;
+    return EXIT_FAILURE;
   }
 
   return EXIT_SUCCESS;
