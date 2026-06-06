@@ -30,8 +30,10 @@
 
 #include <random>
 // https://cppreference.com/cpp/header/random
+// https://cppreference.com/cpp/numeric/random/uniform_int_distribution
 // https://cppreference.com/cpp/numeric/random/uniform_random_bit_generator
 // https://cpprefjp.github.io/reference/random.html
+// https://cpprefjp.github.io/reference/random/uniform_int_distribution.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
 #include <string_view>
@@ -144,6 +146,19 @@ int example_runner() {
       URBG engine(init_key);
 
       output_generated_values(engine);
+
+      std::cout << std::endl;
+    }
+    {
+      std::cout << "uniform_int_distribution:" << std::endl;
+
+      URBG engine;
+
+      std::uniform_int_distribution<> dist(0, 9);
+
+      for (std::size_t i = 0; i < 5; i++) {
+        std::cout << dist(engine) << std::endl;
+      }
 
       std::cout << std::endl;
     }
