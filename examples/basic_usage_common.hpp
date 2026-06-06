@@ -79,12 +79,14 @@ void print_build_info() {
   std::cout << std::endl << std::endl;
 }
 
+constexpr std::size_t num_samples = 5;
+
 /**
  * @brief output the generated values
  */
 template <std::uniform_random_bit_generator URBG>
 void output_generated_values(URBG& engine) {
-  for (std::size_t i = 0; i < 5; i++) {
+  for (std::size_t i = 0; i < num_samples; i++) {
     std::cout << i << std::right << std::setw(21) << engine() << std::endl;
   }
 }
@@ -156,7 +158,7 @@ int example_runner() {
 
       std::uniform_int_distribution<> dist(0, 9);
 
-      for (std::size_t i = 0; i < 5; i++) {
+      for (std::size_t i = 0; i < num_samples; i++) {
         std::cout << dist(engine) << std::endl;
       }
 
