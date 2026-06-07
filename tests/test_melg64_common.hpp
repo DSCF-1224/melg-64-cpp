@@ -27,8 +27,10 @@
 
 #include <random>
 // https://cppreference.com/cpp/header/random
+// https://cppreference.com/cpp/numeric/random/random_device
 // https://cppreference.com/cpp/numeric/random/uniform_random_bit_generator
 // https://cpprefjp.github.io/reference/random.html
+// https://cpprefjp.github.io/reference/random/random_device.html
 // https://cpprefjp.github.io/reference/random/uniform_random_bit_generator.html
 
 #include <span>
@@ -37,11 +39,14 @@
 
 #include <stdexcept>
 // https://cppreference.com/cpp/header/stdexcept
+// https://cppreference.com/cpp/error/runtime_error
 // https://cpprefjp.github.io/reference/stdexcept.html
 
 #include <string>
 // https://cppreference.com/cpp/header/string
+// https://cppreference.com/cpp/string/basic_string
 // https://cpprefjp.github.io/reference/string.html
+// https://cpprefjp.github.io/reference/string/basic_string.html
 
 #include <string_view>
 // https://cppreference.com/cpp/header/string_view
@@ -49,14 +54,16 @@
 
 #include <vector>
 // https://cppreference.com/cpp/header/vector
+// https://cppreference.com/cpp/container/vector
 // https://cpprefjp.github.io/reference/vector.html
+// https://cpprefjp.github.io/reference/vector/vector.html
 
 #include <melg64/melg64.hpp>
 // target of this test
 
 #include "build_info.hpp"
 
-void PrintBuildInfo() {
+void print_build_info() {
   std::cout << "Compiler ID      : " << BUILD_COMPILER_ID << std::endl;
   std::cout << "Compiler Version : " << BUILD_COMPILER_VERSION << std::endl;
   std::cout << "std              : C++" << BUILD_CXX_STANDARD << std::endl;
@@ -131,8 +138,26 @@ const std::vector<melg64::result_type> init_key_vector(init_key_array.begin(),
                                                        init_key_array.end());
 
 template <std::uniform_random_bit_generator URBG>
-bool test_known_output(std::span<const melg64::result_type> init_key,
-                       const char* file) {
+bool compare_output(URBG& engine,
+                    const std::vector<melg64::result_type>& expected) {
+  for (std::size_t i = 0; i < expected.size(); i++) {
+    const melg64::result_type harvest = engine();
+
+    if (harvest != expected[i]) {
+      std::cout << "  index    : " << i << std::endl
+                << "  expected : " << expected[i] << std::endl
+                << "  harvest  : " << harvest << std::endl;
+
+      return false;
+    }
+  }
+
+  return true;
+}
+
+template <std::uniform_random_bit_generator URBG>
+bool test_known_output_impl(std::span<const melg64::result_type> init_key,
+                            const char* file) {
   std::ifstream ifs(std::string("tests/") + file);
 
   if (!ifs.is_open()) {
@@ -142,6 +167,10 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
   constexpr std::size_t sample_size = 1000;
 
   static_assert(sample_size > 0);
+
+  // Skip floating-point output section and section headers.
+  // 1000 outputs of genrand64_res53 + blank lines + headers = 206 lines
+  constexpr std::size_t lines_to_skip = 206;
 
   melg64::result_type receiver;
 
@@ -160,27 +189,13 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
     throw std::runtime_error(std::string("insufficient data in ") + file);
   }
 
-  bool succeeded;
-
   URBG engine(init_key);
 
-  for (std::size_t i = 0; i < sample_size; i++) {
-    const melg64::result_type harvest = engine();
-
-    succeeded = (harvest == expected[i]);
-
-    if (!succeeded) {
-      std::cout << "  index    : " << i << std::endl
-                << "  expected : " << expected[i] << std::endl
-                << "  harvest  : " << harvest << std::endl;
-
-      return succeeded;
-    }
-  }
+  if (!compare_output(engine, expected)) return false;
 
   expected.clear();
 
-  for (std::size_t i = 0; i < 206; i++) std::getline(ifs, header);
+  for (std::size_t i = 0; i < lines_to_skip; i++) std::getline(ifs, header);
 
   while (ifs >> receiver) {
     expected.push_back(receiver);
@@ -195,21 +210,9 @@ bool test_known_output(std::span<const melg64::result_type> init_key,
 
   engine.jump();
 
-  for (std::size_t i = 0; i < sample_size; i++) {
-    const melg64::result_type harvest = engine();
+  if (!compare_output(engine, expected)) return false;
 
-    succeeded = (harvest == expected[i]);
-
-    if (!succeeded) {
-      std::cout << "  index    : " << i << std::endl
-                << "  expected : " << expected[i] << std::endl
-                << "  harvest  : " << harvest << std::endl;
-
-      return succeeded;
-    }
-  }
-
-  return succeeded;
+  return true;
 }
 
 template <std::uniform_random_bit_generator URBG>
@@ -234,7 +237,7 @@ bool test_known_output(std::span<const melg64::result_type> init_key) {
     static_assert(false, "unsupported melg64 type");
   }
 
-  return test_known_output<URBG>(init_key, file);
+  return test_known_output_impl<URBG>(init_key, file);
 }
 
 template <std::uniform_random_bit_generator URBG>
@@ -264,7 +267,7 @@ bool test_seed_reset() {
 
   if (&a == &b) return false;
 
-  for (size_t i = 0; i < 100; i++) {
+  for (std::size_t i = 0; i < 100; i++) {
     a();
   }
 
@@ -284,7 +287,7 @@ bool test_seed_reset(std::span<const melg64::result_type> init_key) {
 
   if (&a == &b) return false;
 
-  for (size_t i = 0; i < 100; i++) {
+  for (std::size_t i = 0; i < 100; i++) {
     a();
   }
 
@@ -318,7 +321,7 @@ struct Test {
 /* test function for each variant */
 template <std::uniform_random_bit_generator URBG>
 int test_runner() {
-  PrintBuildInfo();
+  print_build_info();
 
   const Test tests[] = {
       {"known output (raw array)", test_known_output_raw<URBG>},
