@@ -33,6 +33,10 @@ target_link_libraries(your_target PRIVATE melg64)
 
 All types satisfy `std::uniform_random_bit_generator` and are interchangeable with standard library distributions.
 
+## Usage
+
+See the [`examples/`](examples/) directory for usage examples.
+
 ## License and Attribution
 
 This library is a C++ adaptation of the original C implementation by
