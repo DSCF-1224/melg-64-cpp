@@ -130,7 +130,18 @@ class melg_base {
    * @brief Generates a pseudo-random value.
    * @return A pseudo-random value in [min(), max()].
    */
-  melg64::result_type operator()() noexcept { return (this->*next_)(); }
+  melg64::result_type operator()() noexcept {
+    switch (this->selector_) {
+      case 1:
+        return this->next_case1();
+      case 2:
+        return this->next_case2();
+      case 3:
+        return this->next_case3();
+      default:
+        return this->next_case4();
+    }
+  }
 
   // Additions
 
@@ -141,7 +152,7 @@ class melg_base {
   friend bool operator==(const melg_base& lhs, const melg_base& rhs) noexcept {
     return (lhs.i_ == rhs.i_) &&
            std::equal(lhs.state_, lhs.state_ + NN_, rhs.state_) &&
-           (lhs.lung_ == rhs.lung_) && (lhs.next_ == rhs.next_);
+           (lhs.lung_ == rhs.lung_) && (lhs.selector_ == rhs.selector_);
   }
 
   /**
@@ -164,7 +175,7 @@ class melg_base {
   constexpr void seed(const melg64::result_type s = default_seed) {
     this->initialize_member_state(s);
     this->initialize_member_i();
-    this->initialize_member_next();
+    this->initialize_member_selector();
   }
 
   /**
@@ -178,7 +189,7 @@ class melg_base {
     this->initialize_member_state(this->default_seed);
     this->initialize_member_state(init_key);
     this->initialize_member_i();
-    this->initialize_member_next();
+    this->initialize_member_selector();
   }
 
  private:
@@ -222,7 +233,7 @@ class melg_base {
    */
   melg64::result_type lung_;
 
-  FuncPtr next_;
+  int selector_;
 
   struct ZeroStateTag final {};
 
@@ -233,7 +244,7 @@ class melg_base {
 
     this->i_ = other.i_;
 
-    this->next_ = other.next_;
+    this->selector_ = other.selector_;
   }
 
   void add(melg_base& other) noexcept {
@@ -275,9 +286,7 @@ class melg_base {
     this->i_ = static_cast<std::size_t>(0);
   }
 
-  constexpr void initialize_member_next() noexcept {
-    this->next_ = &melg_base::next_case1;
-  }
+  constexpr void initialize_member_selector() noexcept { this->selector_ = 1; }
 
   constexpr void initialize_member_state(const melg64::result_type seed) {
     constexpr melg64::result_type multiplier =
@@ -387,7 +396,7 @@ class melg_base {
 
     this->i_ = melg_init.i_;
 
-    this->next_ = melg_init.next_;
+    this->selector_ = melg_init.selector_;
 
     for (std::size_t k = 0; k < this->NN; k++) {
       this->state_[k] = melg_init.state_[k];
@@ -418,7 +427,7 @@ class melg_base {
     ++this->i_;
 
     if (this->i_ == this->NN - this->MM) {
-      this->next_ = &melg_base::next_case2;
+      ++this->selector_;
     }
 
     return x;
@@ -438,7 +447,7 @@ class melg_base {
     ++this->i_;
 
     if (this->i_ == static_cast<std::size_t>(this->Lag1Over)) {
-      this->next_ = &melg_base::next_case3;
+      ++this->selector_;
     }
 
     return x;
@@ -458,7 +467,7 @@ class melg_base {
     ++this->i_;
 
     if (this->i_ == this->NN - static_cast<std::size_t>(1)) {
-      this->next_ = &melg_base::next_case4;
+      ++this->selector_;
     }
 
     return x;
@@ -478,7 +487,7 @@ class melg_base {
 
     this->initialize_member_i();
 
-    this->initialize_member_next();
+    this->initialize_member_selector();
 
     return x;
   }
