@@ -193,6 +193,9 @@ class melg_base {
   }
 
  private:
+  static_assert(MM_ > 0);
+  static_assert(NN_ > MM_);
+
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
   static constexpr std::ptrdiff_t Lag1 = Lag1_;
@@ -204,7 +207,13 @@ class melg_base {
 
   static constexpr std::size_t MM = MM_;
 
+  static constexpr std::size_t MM_MNS_1 = MM_ - 1;
+
   static constexpr std::size_t NN = NN_;
+
+  static constexpr std::size_t NN_MNS_1 = NN_ - 1;
+
+  static constexpr std::size_t NN_MNS_MM = NN_ - MM_;
 
   static constexpr std::ptrdiff_t Lag1Over =
       static_cast<std::ptrdiff_t>(NN_) - Lag1_;
@@ -332,14 +341,14 @@ class melg_base {
       j++;
 
       if (i >= this->NN) {
-        this->state_[0] = this->state_[this->NN - 1];
+        this->state_[0] = this->state_[this->NN_MNS_1];
         i = initial_i;
       }
 
       if (j >= key_length) j = initial_j;
     }
 
-    for (k = this->NN - 1; k; k--) {
+    for (k = this->NN_MNS_1; k; k--) {
       this->state_[i] =
           (this->state_[i] ^
            (this->mat3pos(62, this->state_[i - 1]) * multiplier2)) -
@@ -348,14 +357,14 @@ class melg_base {
       i++;
 
       if (i >= this->NN) {
-        this->state_[0] = this->state_[this->NN - 1];
+        this->state_[0] = this->state_[this->NN_MNS_1];
         i = initial_i;
       }
     }
 
     this->lung_ =
         (this->lung_ ^
-         (this->mat3pos(62, this->state_[this->NN - 1]) * multiplier2)) -
+         (this->mat3pos(62, this->state_[this->NN_MNS_1]) * multiplier2)) -
         static_cast<melg64::result_type>(this->NN); /* non linear */
 
     this->state_[0] =
@@ -426,7 +435,7 @@ class melg_base {
 
     ++this->i_;
 
-    if (this->i_ == this->NN - this->MM) {
+    if (this->i_ == this->NN_MNS_MM) {
       ++this->selector_;
     }
 
@@ -436,7 +445,7 @@ class melg_base {
   constexpr melg64::result_type next_case2() noexcept {
     melg64::result_type x = this->next_x_1st();
 
-    this->lung_ = this->next_lung(x, this->i_ + this->MM - this->NN);
+    this->lung_ = this->next_lung(x, this->i_ - this->NN_MNS_MM);
 
     this->state_[this->i_] = this->next_state(x);
 
@@ -456,7 +465,7 @@ class melg_base {
   constexpr melg64::result_type next_case3() noexcept {
     melg64::result_type x = this->next_x_1st();
 
-    this->lung_ = this->next_lung(x, this->i_ + this->MM - this->NN);
+    this->lung_ = this->next_lung(x, this->i_ - this->NN_MNS_MM);
 
     this->state_[this->i_] = this->next_state(x);
 
@@ -466,7 +475,7 @@ class melg_base {
 
     ++this->i_;
 
-    if (this->i_ == this->NN - static_cast<std::size_t>(1)) {
+    if (this->i_ == this->NN_MNS_1) {
       ++this->selector_;
     }
 
@@ -474,10 +483,9 @@ class melg_base {
   }
 
   constexpr melg64::result_type next_case4() noexcept {
-    melg64::result_type x =
-        this->next_x_1st(this->NN - static_cast<std::size_t>(1), 0);
+    melg64::result_type x = this->next_x_1st(this->NN_MNS_1, 0);
 
-    this->lung_ = this->next_lung(x, this->MM - static_cast<std::size_t>(1));
+    this->lung_ = this->next_lung(x, this->MM_MNS_1);
 
     this->state_[this->i_] = this->next_state(x);
 
