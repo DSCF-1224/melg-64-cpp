@@ -429,7 +429,7 @@ class melg_base {
 
     this->state_[this->i_] = this->next_state(x);
 
-    x = this->next_x_3rd(this->Lag1);
+    x = this->next_x_2nd(this->Lag1);
 
     ++this->i_;
 
@@ -447,7 +447,7 @@ class melg_base {
 
     this->state_[this->i_] = this->next_state(x);
 
-    x = this->next_x_3rd(this->Lag1);
+    x = this->next_x_2nd(this->Lag1);
 
     ++this->i_;
 
@@ -465,7 +465,7 @@ class melg_base {
 
     this->state_[this->i_] = this->next_state(x);
 
-    x = this->next_x_3rd(-this->Lag1Over);
+    x = this->next_x_2nd(-this->Lag1Over);
 
     ++this->i_;
 
@@ -483,7 +483,7 @@ class melg_base {
 
     this->state_[this->i_] = this->next_state(x);
 
-    x = this->next_x_3rd(-this->Lag1Over);
+    x = this->next_x_2nd(-this->Lag1Over);
 
     this->initialize_member_i();
 
@@ -513,12 +513,8 @@ class melg_base {
            (this->state_[i_l] & this->MaskL);
   }
 
-  constexpr melg64::result_type next_x_2nd() noexcept {
-    return this->mat3neg(this->Shift1, this->state_[this->i_]);
-  }
-
-  constexpr melg64::result_type next_x_3rd(const std::ptrdiff_t lag1) noexcept {
-    return next_x_2nd() ^
+  constexpr melg64::result_type next_x_2nd(const std::ptrdiff_t lag1) noexcept {
+    return this->mat3neg(this->Shift1, this->state_[this->i_]) ^
            (this->state_[static_cast<std::ptrdiff_t>(this->i_) + lag1] &
             this->Mask1);
   }
