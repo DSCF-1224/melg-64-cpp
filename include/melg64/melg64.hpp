@@ -38,10 +38,8 @@
 
 #include <cstddef>
 // https://cppreference.com/cpp/header/cstddef
-// https://cppreference.com/cpp/types/ptrdiff_t
 // https://cppreference.com/cpp/types/size_t
 // https://cpprefjp.github.io/reference/cstddef.html
-// https://cpprefjp.github.io/reference/cstddef/ptrdiff_t.html
 // https://cpprefjp.github.io/reference/cstddef/size_t.html
 
 #include <cstdint>
@@ -78,7 +76,7 @@ template <std::uniform_random_bit_generator URBG>
 struct jump_string;
 
 template <std::size_t NN_, std::size_t MM_, melg64::result_type MatrixA_,
-          int P_, std::ptrdiff_t Lag1_, int Shift1_, melg64::result_type Mask1_,
+          int P_, std::size_t Lag1_, int Shift1_, melg64::result_type Mask1_,
           int ShiftLungPos_, int ShiftLungNeg_>
 class melg_base {
  public:
@@ -198,7 +196,7 @@ class melg_base {
 
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
 
-  static constexpr std::ptrdiff_t Lag1 = Lag1_;
+  static constexpr std::size_t Lag1 = Lag1_;
 
   static constexpr melg64::result_type mag01[2] = {
       static_cast<melg64::result_type>(0), MatrixA_};
@@ -215,8 +213,7 @@ class melg_base {
 
   static constexpr std::size_t NN_MNS_MM = NN_ - MM_;
 
-  static constexpr std::ptrdiff_t Lag1Over =
-      static_cast<std::ptrdiff_t>(NN_) - Lag1_;
+  static constexpr std::size_t Lag1Over = static_cast<std::size_t>(NN_) - Lag1_;
 
   static constexpr int P = P_;
 
@@ -423,17 +420,21 @@ class melg_base {
   }
 
   constexpr melg64::result_type next_case1() noexcept {
-    melg64::result_type x = next_x_1st();
+    const std::size_t i = this->i_;
+
+    const std::size_t i_pls_1 = i + static_cast<std::size_t>(1);
+
+    melg64::result_type x = next_x_1st(i, i_pls_1);
 
     this->lung_ = this->next_lung(x, this->i_ + this->MM);
 
-    this->state_[this->i_] = this->next_state(x);
+    this->state_[i] = this->next_state(x);
 
-    x = this->next_x_2nd(this->Lag1);
+    x = this->next_x_2nd(i, i + this->Lag1);
 
-    ++this->i_;
+    this->i_ = i_pls_1;
 
-    if (this->i_ == this->NN_MNS_MM) {
+    if (i_pls_1 == this->NN_MNS_MM) {
       ++this->selector_;
     }
 
@@ -441,17 +442,21 @@ class melg_base {
   }
 
   constexpr melg64::result_type next_case2() noexcept {
-    melg64::result_type x = this->next_x_1st();
+    const std::size_t i = this->i_;
 
-    this->lung_ = this->next_lung(x, this->i_ - this->NN_MNS_MM);
+    const std::size_t i_pls_1 = i + static_cast<std::size_t>(1);
 
-    this->state_[this->i_] = this->next_state(x);
+    melg64::result_type x = next_x_1st(i, i_pls_1);
 
-    x = this->next_x_2nd(this->Lag1);
+    this->lung_ = this->next_lung(x, i - this->NN_MNS_MM);
 
-    ++this->i_;
+    this->state_[i] = this->next_state(x);
 
-    if (this->i_ == static_cast<std::size_t>(this->Lag1Over)) {
+    x = this->next_x_2nd(i, i + this->Lag1);
+
+    this->i_ = i_pls_1;
+
+    if (i_pls_1 == this->Lag1Over) {
       ++this->selector_;
     }
 
@@ -459,17 +464,21 @@ class melg_base {
   }
 
   constexpr melg64::result_type next_case3() noexcept {
-    melg64::result_type x = this->next_x_1st();
+    const std::size_t i = this->i_;
 
-    this->lung_ = this->next_lung(x, this->i_ - this->NN_MNS_MM);
+    const std::size_t i_pls_1 = i + static_cast<std::size_t>(1);
 
-    this->state_[this->i_] = this->next_state(x);
+    melg64::result_type x = next_x_1st(i, i_pls_1);
 
-    x = this->next_x_2nd(-this->Lag1Over);
+    this->lung_ = this->next_lung(x, i - this->NN_MNS_MM);
 
-    ++this->i_;
+    this->state_[i] = this->next_state(x);
 
-    if (this->i_ == this->NN_MNS_1) {
+    x = this->next_x_2nd(i, i - this->Lag1Over);
+
+    this->i_ = i_pls_1;
+
+    if (i_pls_1 == this->NN_MNS_1) {
       ++this->selector_;
     }
 
@@ -477,13 +486,15 @@ class melg_base {
   }
 
   constexpr melg64::result_type next_case4() noexcept {
+    const std::size_t i = this->i_;
+
     melg64::result_type x = this->next_x_1st(this->NN_MNS_1, 0);
 
     this->lung_ = this->next_lung(x, this->MM_MNS_1);
 
-    this->state_[this->i_] = this->next_state(x);
+    this->state_[i] = this->next_state(x);
 
-    x = this->next_x_2nd(-this->Lag1Over);
+    x = this->next_x_2nd(i, i - this->Lag1Over);
 
     this->initialize_member_i();
 
@@ -503,20 +514,16 @@ class melg_base {
     return x ^ this->mat3pos(this->ShiftLungPos, this->lung_);
   }
 
-  constexpr melg64::result_type next_x_1st() noexcept {
-    return this->next_x_1st(this->i_, this->i_ + static_cast<std::size_t>(1));
-  }
-
   constexpr melg64::result_type next_x_1st(const std::size_t i_u,
                                            const std::size_t i_l) noexcept {
     return (this->state_[i_u] & this->MaskU) |
            (this->state_[i_l] & this->MaskL);
   }
 
-  constexpr melg64::result_type next_x_2nd(const std::ptrdiff_t lag1) noexcept {
-    return this->mat3neg(this->Shift1, this->state_[this->i_]) ^
-           (this->state_[static_cast<std::ptrdiff_t>(this->i_) + lag1] &
-            this->Mask1);
+  constexpr melg64::result_type next_x_2nd(
+      const std::size_t i, const std::size_t i_with_lag1) noexcept {
+    return this->mat3neg(this->Shift1, this->state_[i]) ^
+           (this->state_[i_with_lag1] & this->Mask1);
   }
 };
 
