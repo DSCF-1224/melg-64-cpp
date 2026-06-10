@@ -304,11 +304,13 @@ class melg_base {
 
     for (; this->i_ < this->NN; this->i_++) {
       this->state_[this->i_] =
-          multiplier * this->mat3pos(62, this->state_[this->i_ - 1]) + this->i_;
+          multiplier * melg_base::mat3pos(62, this->state_[this->i_ - 1]) +
+          this->i_;
     }
 
     this->lung_ =
-        multiplier * this->mat3pos(62, this->state_[this->i_ - 1]) + this->i_;
+        multiplier * melg_base::mat3pos(62, this->state_[this->i_ - 1]) +
+        this->i_;
   }
 
   constexpr void initialize_member_state(
@@ -331,7 +333,7 @@ class melg_base {
     for (; k; k--) {
       this->state_[i] =
           (this->state_[i] ^
-           (this->mat3pos(62, this->state_[i - 1]) * multiplier1)) +
+           (melg_base::mat3pos(62, this->state_[i - 1]) * multiplier1)) +
           init_key[j] + static_cast<melg64::result_type>(j); /* non linear */
 
       i++;
@@ -348,7 +350,7 @@ class melg_base {
     for (k = this->NN_MNS_1; k; k--) {
       this->state_[i] =
           (this->state_[i] ^
-           (this->mat3pos(62, this->state_[i - 1]) * multiplier2)) -
+           (melg_base::mat3pos(62, this->state_[i - 1]) * multiplier2)) -
           static_cast<melg64::result_type>(i); /* non linear */
 
       i++;
@@ -361,7 +363,7 @@ class melg_base {
 
     this->lung_ =
         (this->lung_ ^
-         (this->mat3pos(62, this->state_[this->NN_MNS_1]) * multiplier2)) -
+         (melg_base::mat3pos(62, this->state_[this->NN_MNS_1]) * multiplier2)) -
         static_cast<melg64::result_type>(this->NN); /* non linear */
 
     this->state_[0] =
@@ -506,12 +508,13 @@ class melg_base {
   constexpr melg64::result_type next_lung(const melg64::result_type x,
                                           const std::size_t i) noexcept {
     return (x >> 1) ^ this->mag01[x & static_cast<melg64::result_type>(1)] ^
-           this->state_[i] ^ this->mat3neg(this->ShiftLungNeg, this->lung_);
+           this->state_[i] ^
+           melg_base::mat3neg(this->ShiftLungNeg, this->lung_);
   }
 
   constexpr melg64::result_type next_state(
       const melg64::result_type x) noexcept {
-    return x ^ this->mat3pos(this->ShiftLungPos, this->lung_);
+    return x ^ melg_base::mat3pos(this->ShiftLungPos, this->lung_);
   }
 
   constexpr melg64::result_type next_x_1st(const std::size_t i_u,
@@ -522,7 +525,7 @@ class melg_base {
 
   constexpr melg64::result_type next_x_2nd(
       const std::size_t i, const std::size_t i_with_lag1) noexcept {
-    return this->mat3neg(this->Shift1, this->state_[i]) ^
+    return melg_base::mat3neg(this->Shift1, this->state_[i]) ^
            (this->state_[i_with_lag1] & this->Mask1);
   }
 };
