@@ -192,6 +192,7 @@ class melg_base {
 
  private:
   static_assert(MM_ > 0);
+  static_assert(NN_ > Lag1_);
   static_assert(NN_ > MM_);
 
   using FuncPtr = melg64::result_type (melg_base::*)() noexcept;
