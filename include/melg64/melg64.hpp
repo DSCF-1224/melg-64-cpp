@@ -429,9 +429,12 @@ class melg_base {
 
     melg64::result_type x = next_x_1st(i, i_pls_1);
 
-    this->lung_ = this->next_lung(x, this->i_ + this->MM);
+    const melg64::result_type new_lung =
+        this->next_lung(x, this->i_ + this->MM);
 
-    this->state_[i] = this->next_state(x);
+    this->lung_ = new_lung;
+
+    this->state_[i] = melg_base::next_state(x, new_lung);
 
     x = this->next_x_2nd(i, i + this->Lag1);
 
@@ -451,9 +454,12 @@ class melg_base {
 
     melg64::result_type x = next_x_1st(i, i_pls_1);
 
-    this->lung_ = this->next_lung(x, i - this->NN_MNS_MM);
+    const melg64::result_type new_lung =
+        this->next_lung(x, i - this->NN_MNS_MM);
 
-    this->state_[i] = this->next_state(x);
+    this->lung_ = new_lung;
+
+    this->state_[i] = melg_base::next_state(x, new_lung);
 
     x = this->next_x_2nd(i, i + this->Lag1);
 
@@ -473,9 +479,12 @@ class melg_base {
 
     melg64::result_type x = next_x_1st(i, i_pls_1);
 
-    this->lung_ = this->next_lung(x, i - this->NN_MNS_MM);
+    const melg64::result_type new_lung =
+        this->next_lung(x, i - this->NN_MNS_MM);
 
-    this->state_[i] = this->next_state(x);
+    this->lung_ = new_lung;
+
+    this->state_[i] = melg_base::next_state(x, new_lung);
 
     x = this->next_x_2nd(i, i - this->Lag1Over);
 
@@ -493,9 +502,11 @@ class melg_base {
 
     melg64::result_type x = this->next_x_1st(this->NN_MNS_1, 0);
 
-    this->lung_ = this->next_lung(x, this->MM_MNS_1);
+    const melg64::result_type new_lung = this->next_lung(x, this->MM_MNS_1);
 
-    this->state_[i] = this->next_state(x);
+    this->lung_ = new_lung;
+
+    this->state_[i] = melg_base::next_state(x, new_lung);
 
     x = this->next_x_2nd(i, i - this->Lag1Over);
 
@@ -513,9 +524,9 @@ class melg_base {
            melg_base::mat3neg(this->ShiftLungNeg, this->lung_);
   }
 
-  constexpr melg64::result_type next_state(
-      const melg64::result_type x) noexcept {
-    return x ^ melg_base::mat3pos(this->ShiftLungPos, this->lung_);
+  static constexpr melg64::result_type next_state(
+      const melg64::result_type x, const melg64::result_type lung) noexcept {
+    return x ^ melg_base::mat3pos(melg_base::ShiftLungPos, lung);
   }
 
   constexpr melg64::result_type next_x_1st(const std::size_t i_u,
